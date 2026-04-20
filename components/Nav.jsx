@@ -66,6 +66,9 @@ function Nav({ current = "home" }) {
             <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
           </div>
         </div>
+        <a href="kontakt.html" className="btn btn-primary" onClick={() => setMobileOpen(false)}>
+          {t.nav.cta}
+        </a>
       </div>
     </nav>
   );

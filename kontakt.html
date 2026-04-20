@@ -195,7 +195,46 @@ function App() {
 
   const next = () => setStep(s => Math.min(s + 1, STEPS.length - 1));
   const prev = () => setStep(s => Math.max(s - 1, 0));
-  const submit = () => { setSent(true); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const submit = () => {
+    const line = (label, val) => val ? `${label}: ${val}` : null;
+    const productLabels = f.products
+      .map(id => (PRODUCTS.find(p => p.id === id) || {}).label)
+      .filter(Boolean);
+    const parts = [
+      '— PODACI O TVRTKI —',
+      line('Tvrtka / obrt', f.company),
+      line('Vlasnik', f.owner),
+      line('Telefon', f.phone),
+      line('E-mail (kontakt)', f.email),
+      line('E-mail (ponuda/račun)', f.emailInvoice),
+      line('Adresa', f.address),
+      line('OIB', f.oib),
+      line('PDV', f.pdv),
+      '',
+      '— FISKALIZACIJA —',
+      line('Suglasnost FINA', f.finaConsent ? 'DA' : 'NE'),
+      line('Djelatnik', f.cashier),
+      '',
+      '— BLAGAJNA I CJENIK —',
+      line('Oznake blagajni/lokacija', f.locations),
+      line('Tko podešava cjenik', f.priceListUs ? 'Takuin' : 'Samostalno'),
+      line('Cjenik', f.priceList),
+      '',
+      '— PONUDA —',
+      productLabels.length ? `Proizvodi:\n- ${productLabels.join('\n- ')}` : null,
+      line('Dodatno', f.extras),
+      '',
+      '— PERIOD —',
+      line('Period rada', f.period),
+      line('Napomena', f.note),
+    ].filter(x => x !== null && x !== undefined);
+    const body = parts.join('\n');
+    const subject = `Upit za ponudu — ${f.company || 'Takuin'}`;
+    const href = `mailto:sanja@adrinaut.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = href;
+    setSent(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   if (sent) {
     return (

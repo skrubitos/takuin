@@ -156,8 +156,19 @@ section {
 
 @media (max-width: 960px) {
 
+  .tk-nav-inner {
+    gap: 12px;
+  }
+
+  .tk-nav-left,
+  .tk-nav-right {
+    gap: 12px;
+  }
+
   .tk-nav-left .tk-nav-link,
-  .tk-nav-right .tk-nav-link {
+  .tk-nav-right .tk-nav-link,
+  .tk-nav-right .tk-lang,
+  .tk-nav-right > .btn {
     display: none;
   }
 
@@ -165,6 +176,16 @@ section {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--white);
+    box-shadow: var(--shadow-ring);
+    color: var(--fg-1);
+  }
+
+  .tk-nav-burger:hover {
+    background: var(--gray-50);
   }
 }
 
@@ -198,6 +219,12 @@ section {
   font-size: 24px;
   padding: 8px;
   cursor: pointer;
+}
+
+.tk-mobile-menu .btn {
+  align-self: stretch;
+  margin-top: 16px;
+  justify-content: center;
 }
 
 /* ---------- Hero ---------- */
@@ -356,9 +383,46 @@ section {
   gap: 16px;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 560px) {
   .tk-products {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .tk-product-card {
+    padding: 18px 16px;
+    min-height: 220px;
+    gap: 10px;
+  }
+
+  .tk-product-card h3 {
+    font-size: 20px;
+  }
+
+  .tk-product-card .desc {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .tk-product-card .tag {
+    top: 12px;
+    right: 12px;
+    font-size: 10px;
+  }
+
+  .tk-product-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .tk-product-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .tk-product-card .cta {
+    font-size: 13px;
   }
 }
 
@@ -482,7 +546,30 @@ section {
 
 @media (max-width: 640px) {
   .tk-pricing {
-    grid-template-columns: 1fr;
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding: 4px 20px 16px;
+    margin: 0 -16px;
+    scroll-padding-left: 20px;
+  }
+
+  .tk-pricing::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .tk-pricing::-webkit-scrollbar-thumb {
+    background: rgba(34, 42, 53, 0.15);
+    border-radius: 9999px;
+  }
+
+  .tk-pricing > .tk-price {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+    min-width: 0;
   }
 }
 
@@ -627,6 +714,31 @@ section {
 @media (max-width: 860px) {
   .tk-features-3 {
     grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .tk-feat {
+    text-align: center;
+  }
+
+  .tk-feat-check {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tk-feat ul {
+    align-items: center;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .tk-feat li {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .tk-feat li::before {
+    display: none;
   }
 }
 
