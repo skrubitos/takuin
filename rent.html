@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="hr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAKUIN RENT MANAGER — Park</title>
+  <link rel="stylesheet" href="styles/foundations.css">
+  <link rel="stylesheet" href="styles/site.css">
+  <link rel="stylesheet" href="styles/phone.css">
+</head>
+
+<body>
+  <div id="root" data-screen-label="03 Rent"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+  <script type="text/babel" src="components/i18n.jsx"></script>
+  <script type="text/babel" src="components/Nav.jsx"></script>
+  <script type="text/babel" src="components/PhoneMock.jsx"></script>
+  <script type="text/babel" src="components/Pieces.jsx"></script>
+  <script type="text/babel">
+    const USE_CASES = [
+      { k: "park", t: "Zabavni park", d: "Puno korisnika u isto vrijeme na sadržajima…" },
+      { k: "sunbed", t: "Ležaljke, suncobrani", d: "Različite lokacije, različite kategorizacije…" },
+      { k: "bike", t: "Bicikle", d: "Muški, ženski, dječji bicikli, s dj. sjedalicom…" },
+      { k: "boat", t: "Brodovi, plovila", d: "Različite vrste, najam po danu ili satu…" },
+      { k: "sup", t: "SUP-ovi, kajaci", d: "Različite kategorije označavanja…" },
+      { k: "jetski", t: "Jet ski", d: "Više djelatnika, više lokacija, online monitoring…" },
+      { k: "wind", t: "Windsurfing", d: "Ili bilo koji drugi sadržaj…" },
+      { k: "pedal", t: "Pedaline", d: "Umreženost sadržaja i online praćenje stanja prodaje…" },
+    ];
+
+    const FAQ_HR = [
+      { q: "Što mi je potrebno za rad?", a: "Android uređaj sa štampačem i mreža. Sve ostalo podešavamo mi." },
+      { q: "Da li mi uz TAKUIN RENT MANAGER treba posebno i app za fiskalizaciju?", a: "Ne. TAKUIN RENT MANAGER sadrži app PARK za organizaciju poslovanja i TAKUIN POS za izdavanje i fiskaliziranje računa. Aplikacije su povezane." },
+      { q: "Kako fiskalizirati račune?", a: "Trebate internet vezu, digitalni FINA certifikat (vrijedi 5g.), Android uređaj, prijenosni štampač i TAKUIN POS aplikaciju." },
+      { q: "Da li nabavljate i hardware?", a: "Da. Savjetujemo vas oko opreme, nabavljamo je za vas, podešavamo cijeli sustav i šaljemo sve gotovo." },
+      { q: "Koliko aplikacija mi treba?", a: "Jedna aplikacija = jedno prodajno mjesto. U jednoj app možete imati koliko god sadržaja želite — ležaljke, bicikle, plovila, park…" },
+      { q: "Želim pratiti poslovanje od bilo kuda. Da li je to uključeno?", a: "Po tvrtci/obrtu uz TAKUIN RENT MANAGER dobivate gratis jednu Nadglednik aplikaciju za praćenje poslovanja." },
+      { q: "Koji je postupak?", a: "Kontaktirajte nas e-mailom s imenom tvrtke, sadržajima i brojem lokacija. Ponudu dobivate u najkraćem roku." },
+      { q: "Rokovi?", a: "Podešavanje sustava — do sat vremena. Sustav se može podesiti mjesec-dva prije starta; plaćate tek od prvog mjeseca rada." },
+      { q: "Koliko će me koštati?", a: "Aplikacija je besplatna, instalacija je jednokratna, održavanje je mjesečno. Plaćate mjesece u kojima radite i imate promet." },
+    ];
+
+    function App() {
+      const [, t] = useLang();
+      return (
+        <div>
+          <Nav current="rent" />
+          <div className="page">
+            <div className="home-hero-grid" style={{ padding: '60px 0 40px' }}>
+              <div className="home-hero-text">
+                <div className="eyebrow"><span className="dot" style={{ background: '#1E5A8A', boxShadow: '0 0 0 3px rgba(30,90,138,0.15)' }}></span>{t.rent.eyebrow}</div>
+                <h1>{t.rent.title}</h1>
+                <p>{t.rent.sub}</p>
+                <div className="actions">
+                  <a href="mailto:sanja@adrinaut.com" className="btn btn-primary">{t.rent.ctaPrimary}</a>
+                  <a href="#pricing" className="btn btn-ghost">{t.rent.ctaGhost}</a>
+                </div>
+                <div style={{ marginTop: 24, padding: '14px 16px', background: 'var(--gray-50)', borderRadius: 10, fontSize: 13, color: 'var(--fg-3)' }}>
+                  Sustav se sastoji od <strong style={{ color: 'var(--fg-1)' }}>Android aplikacije</strong> za rad na terenu + <strong style={{ color: 'var(--fg-1)' }}>web/mob aplikacije</strong> za online monitoring.
+                </div>
+              </div>
+              <PhoneMock />
+            </div>
+          </div>
+
+          <div className="page tk-section" id="pricing">
+            <div className="section-head-lg">
+              <div className="tk-eyebrow">Naša ponuda aplikacija</div>
+              <h2>Kompletno rješenje za iznajmljivanje.</h2>
+            </div>
+            <div className="tk-pricing">
+              <Price cat="TAKUIN RENT MANAGER" title="Sustav" amount="100" per="mjesečno" featured features={[
+                "1 sustav, 2 aplikacije",
+                "POS i PARK aplikacije",
+                "Izdavanje računa i organizacija rada",
+                "Pohrana podataka u oblaku",
+                "Održavanje uključeno",
+                "+1 gratis Nadglednik",
+              ]} desc="Uključuje 2 aplikacije koje omogućavaju izdavanje računa i organizaciju rada na terenu."
+                cta="Zatraži ponudu" />
+              <Price cat="Nadglednik" title="Aplikacija" amount="65" per="mjesečno" features={[
+                "Praćenje poslovanja online",
+                "Po lokacijama i djelatnicima",
+                "Po rekvizitima",
+                "Jedan gratis uključen u RENT paket",
+              ]} desc="NADGLEDNIK omogućava praćenje izdanih računa, ponuda i prometa."
+                cta="Zatraži ponudu" />
+              <Price cat="TAKUIN POS" title="Aplikacija" amount="20" per="mjesečno" features={[
+                "1 aplikacija — jedan uređaj",
+                "Izdavanje računa u hodu",
+                "Pohrana podataka u oblaku",
+                "Godišnje = 120 EUR",
+              ]} desc="Fiskalna blagajna koja omogućava izdavanje i fiskalizaciju računa."
+                cta="Zatraži ponudu" />
+            </div>
+
+            <div style={{ height: 32 }}></div>
+            <div className="tk-pricing">
+              <Price cat="Usluga" title="Podešavanje sustava" amount="40" per="jednokratno" features={[
+                "Instalacija i podešavanje",
+                "U uredu ili telefonom",
+              ]} desc="Kako bi bez stresa startali posao, sve vam podešavamo za rad." cta="Naruči" />
+              <Price cat="Hardware" title="Prijenosni štampač" amount="120" per="jednokratno" features={[
+                "Jamstvo 12 mj.",
+                "Baterija 1500mAh",
+                "79×110×45 mm",
+              ]} desc="Povezuje se s aplikacijom TAKUIN POS i/ili PARK za ispis računa." cta="Naruči" />
+              <Price cat="Usluga" title="Telefonska podrška" amount="20" per="po intervenciji" features={[
+                "20 EUR — 15 do 30 min",
+                "40 EUR — 30 do 60 min",
+                "Greške izvođača — besplatno",
+              ]} desc="Podrška u radu, edukacija, rješavanje problema." cta="Kontakt" />
+            </div>
+          </div>
+
+          <div className="page tk-section">
+            <div className="section-head-lg">
+              <div className="tk-eyebrow">Tko koristi TAKUIN RENT?</div>
+              <h2>Razvijeno za iznajmljivače sadržaja u turizmu.</h2>
+            </div>
+            <div className="tk-usecases">
+              {USE_CASES.map((u, i) => <UseCase key={i} kind={u.k} title={u.t} desc={u.d} />)}
+            </div>
+          </div>
+
+          <div className="page tk-section">
+            <div className="section-head-lg">
+              <div className="tk-eyebrow">Zašto koriste TAKUIN RENT?</div>
+              <h2>Organizirano, sigurno, pod kontrolom.</h2>
+            </div>
+            <div className="tk-features-3">
+              <Feature title="Organiziranost na terenu" items={[
+                "Jednostavno korištenje, editiranje, rentanje",
+                "Vođenje i praćenje zauzeća sadržaja",
+                "RFID čitač — brzo očitanje",
+                "Izdavanje ponuda i računa iz ponude",
+                "Smanjuje gužve i stres",
+              ]} />
+              <Feature title="Sigurnost" items={[
+                "Svi podaci u oblaku, dostupni online",
+                "Tehnički support na daljinu",
+                "U slučaju gubitka uređaj poslovanje sačuvano",
+              ]} />
+              <Feature title="Monitoring / Nadgledanje" items={[
+                "Praćenje prometa po lokacijama i djelatnicima",
+                "Online stanje prometa po kriterijima",
+                "Kontrola rada djelatnika",
+                "Izvještaji za bolje planiranje",
+              ]} />
+            </div>
+          </div>
+
+          <div className="page tk-section-sm">
+            <div className="section-head-lg"><h2>Naši partneri o nama</h2></div>
+            <div className="tk-testimonials">
+              <Testimonial
+                quote="TAKUIN RENT je najbolji provjereni sustav koji je neophodan za rad svim iznajmljivačima sadržaja u turizmu. Poslovanje je organizirano, jednostavno i profesionalno."
+                name="Milivoj Dabić" role="Regionalni partner WIBIT-a" initials="MD" />
+              <Testimonial
+                quote="TAKUIN RENT omogućava u svakom trenu od bilo kuda praćenje poslovanja lokacija, djelatnika, sadržaja. Napokon sustav koji prati našu dinamiku rada."
+                name="Misael Udovičić" role="Regionalni partner WIBIT-a" initials="MU" />
+            </div>
+          </div>
+
+          <div className="page tk-section-sm">
+            <div className="section-head-lg"><h2>{t.faq.title}</h2></div>
+            <Faq items={FAQ_HR} />
+          </div>
+
+          <div className="page tk-section-sm">
+            <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton} />
+          </div>
+
+          <Footer />
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+
+</html>

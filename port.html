@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAKUIN PORT — Lučko poslovanje</title>
+<link rel="stylesheet" href="styles/foundations.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/phone.css">
+</head>
+<body>
+<div id="root" data-screen-label="04 Port"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="components/i18n.jsx"></script>
+<script type="text/babel" src="components/Nav.jsx"></script>
+<script type="text/babel" src="components/PhoneMock.jsx"></script>
+<script type="text/babel" src="components/Pieces.jsx"></script>
+<script type="text/babel">
+const FAQ_HR = [
+  { q: "Za koga je namijenjen TAKUIN PORT?", a: "Za lučke uprave, sidrišta i komercijalne luke koje trebaju voditi evidenciju plovila, pristojbi i zauzetosti vezova." },
+  { q: "Što sve uključuje sustav?", a: "Android aplikaciju za terenski rad (naplata pristojbi, evidencija plovila) + web sučelje za administraciju i online monitoring." },
+  { q: "Da li je integrirana fiskalizacija?", a: "Da. Računi se izdaju i fiskaliziraju kroz TAKUIN POS aplikaciju koja je povezana sa sustavom." },
+  { q: "Mogu li pratiti više lokacija?", a: "Da. Online monitoring omogućava praćenje prometa, zauzetosti i rada djelatnika po svim lokacijama istovremeno." },
+  { q: "Koji je postupak za implementaciju?", a: "Kontaktirajte nas s podacima o luci/sidrištu, broju vezova i postojećoj opremi. Dobit ćete neobvezujuću ponudu." },
+];
+
+function App() {
+  const [, t] = useLang();
+  return (
+    <div>
+      <Nav current="port"/>
+      <div className="page">
+        <div className="home-hero-grid" style={{ padding: '60px 0 40px' }}>
+          <div className="home-hero-text">
+            <div className="eyebrow"><span className="dot" style={{ background: '#0A6C5F', boxShadow: '0 0 0 3px rgba(10,108,95,0.15)' }}></span>{t.port.eyebrow}</div>
+            <h1>{t.port.title}</h1>
+            <p>{t.port.sub}</p>
+            <div className="actions">
+              <a href="mailto:sanja@adrinaut.com" className="btn btn-primary">{t.port.ctaPrimary}</a>
+              <a href="#pricing" className="btn btn-ghost">{t.port.ctaGhost}</a>
+            </div>
+            <div style={{ marginTop: 24, padding: '14px 16px', background: 'var(--gray-50)', borderRadius: 10, fontSize: 13, color: 'var(--fg-3)' }}>
+              <strong style={{ color: 'var(--fg-1)' }}>Web</strong> za administraciju + <strong style={{ color: 'var(--fg-1)' }}>Android</strong> za teren — u svakom trenu znate tko je vezan gdje.
+            </div>
+          </div>
+          <PhoneMock/>
+        </div>
+      </div>
+
+      <div className="page tk-section" id="pricing">
+        <div className="section-head-lg">
+          <div className="tk-eyebrow">Cjenik</div>
+          <h2>Web i Android apps za lučko poslovanje.</h2>
+        </div>
+        <div className="tk-pricing">
+          <Price cat="TAKUIN PORT" title="Aplikacija" amount="48" per="mjesečno" features={[
+            "48 EUR mjesečno",
+            "Web aplikacija za administraciju",
+            "Pregled plovila i vezova",
+            "Izvještaji po lokacijama",
+          ]} desc="Administracija i online monitoring lučkog poslovanja." cta="Zatraži ponudu"/>
+          <Price cat="TAKUIN PORT" title="Android rad na terenu" amount="100" per="mjesečno" featured features={[
+            "100 EUR mjesečno",
+            "Naplata pristojbi na terenu",
+            "Evidencija plovila i vezova",
+            "Sinkronizacija s web sučeljem",
+            "Pohrana podataka u oblaku",
+          ]} desc="Aplikacija za rad djelatnika na vezu — sve podatke o plovilima i pristojbama vodi u realnom vremenu." cta="Zatraži ponudu"/>
+          <Price cat="TAKUIN POS" title="Fiskalizacija" amount="20" per="mjesečno" features={[
+            "Izdavanje i fiskaliziranje računa",
+            "1 aplikacija po lokaciji",
+            "Pohrana u oblak",
+          ]} desc="Integrirana fiskalna blagajna." cta="Zatraži ponudu"/>
+        </div>
+
+        <div style={{ height: 32 }}></div>
+        <div className="tk-pricing">
+          <Price cat="Usluga" title="Podešavanje sustava" amount="40" per="jednokratno" features={[
+            "Instalacija i podešavanje",
+            "Edukacija djelatnika",
+          ]} desc="Podešavanje lučkog sustava i integracija postojećih podataka." cta="Naruči"/>
+          <Price cat="Hardware" title="Prijenosni štampač" amount="120" per="jednokratno" features={[
+            "Jamstvo 12 mj.",
+            "79×110×45 mm",
+          ]} desc="Bluetooth štampač za ispis računa i naloga na vezu." cta="Naruči"/>
+          <Price cat="Usluga" title="Telefonska podrška" amount="20" per="po intervenciji" features={[
+            "20 EUR — 15 do 30 min",
+            "40 EUR — 30 do 60 min",
+          ]} desc="Podrška u radu i otklanjanje problema." cta="Kontakt"/>
+        </div>
+      </div>
+
+      <div className="page tk-section">
+        <div className="section-head-lg">
+          <div className="tk-eyebrow">Zašto TAKUIN PORT?</div>
+          <h2>Jednostavan rad i potpuna kontrola.</h2>
+        </div>
+        <div className="tk-features-3">
+          <Feature title="Stvarno vrijeme" items={[
+            "Pregled slobodnih vezova uživo",
+            "Status plovila na lokaciji",
+            "Izdavanje i fiskalizacija odmah",
+          ]}/>
+          <Feature title="Sigurnost" items={[
+            "Svi podaci u oblaku",
+            "Tehnička podrška na daljinu",
+            "Gubitak uređaja — bez gubitka podataka",
+          ]}/>
+          <Feature title="Povjerenje" items={[
+            "Razvijeno s lučkim upravama",
+            "Integrirana fiskalizacija RH",
+            "25+ godina razvoja poslovnih sustava",
+          ]}/>
+        </div>
+      </div>
+
+      <div className="page tk-section-sm">
+        <div className="section-head-lg"><h2>{t.faq.title}</h2></div>
+        <Faq items={FAQ_HR}/>
+      </div>
+
+      <div className="page tk-section-sm">
+        <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton}/>
+      </div>
+
+      <Footer/>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

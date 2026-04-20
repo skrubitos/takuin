@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="hr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAKUIN POS — Mobilna blagajna</title>
+  <link rel="stylesheet" href="styles/foundations.css">
+  <link rel="stylesheet" href="styles/site.css">
+  <link rel="stylesheet" href="styles/phone.css">
+</head>
+
+<body>
+  <div id="root" data-screen-label="02 POS"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+  <script type="text/babel" src="components/i18n.jsx"></script>
+  <script type="text/babel" src="components/Nav.jsx"></script>
+  <script type="text/babel" src="components/PhoneMock.jsx"></script>
+  <script type="text/babel" src="components/Pieces.jsx"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const FAQ_HR = [
+      { q: "Što mi je potrebno za rad?", a: "Android uređaj sa štampačem i internet veza. Sve ostalo podešavamo mi." },
+      { q: "Da li mi treba posebno i aplikacija za fiskalizaciju?", a: "Ne. TAKUIN POS uključuje i fiskalizaciju. Treba zadovoljiti preduvjete — FINA certifikat, podesiti sustav i stabilna internet veza." },
+      { q: "Kako fiskalizirati račune?", a: "Obveznici fiskalizacije moraju imati: internet vezu, digitalni FINA certifikat, Android uređaj, prijenosni štampač i TAKUIN POS aplikaciju. FINA certifikat vrijedi 5 godina." },
+      { q: "Da li nabavljate i hardware?", a: "Da. Savjetujemo vas oko opreme, nabavljamo je za vas, podešavamo cijeli sustav i šaljemo sve gotovo. Samo upalite uređaje i možete početi raditi." },
+      { q: "Koliko aplikacija mi treba?", a: "Jedna aplikacija = jedno prodajno mjesto, jedan uređaj. Više korisnika može dijeliti jednu aplikaciju. U jednoj app može biti bilo koja količina sadržaja." },
+      { q: "Koji je postupak za korištenje sustava?", a: "Kontaktirajte nas na e-mail, napišite ime tvrtke, koje sadržaje nudite i koliko prodajnih mjesta imate. Ponudu i informacije dobijate u najkraćem roku." },
+      { q: "Koji su najčešći problemi i kako ih riješiti?", a: "Slabi internet je najčešći. Vi i dalje možete raditi — računi se fiskaliziraju po povratku na mrežu. SIM kartice ili HOMEBOX rješavaju probleme s vezom." },
+      { q: "Mogu li sam instalirati aplikaciju?", a: "Možete prema naputcima koje dobijete od nas. Kontaktirajte nas za detaljne upute." },
+      { q: "Rokovi nabavke?", a: "Podešavanje sustava i instalacija — do sat vremena ako su dostavljeni svi podaci. Savjetujemo da se javite čim prije kako bi izbjegli stres." },
+      { q: "Koliko će me koštati?", a: "Nema posebnih uvjeta. Instalacija je jednokratna, održavanje mjesečno — plaćate onoliko mjeseci koliko koristite. Zatražite neobvezujuću ponudu." },
+    ];
+
+    function App() {
+      const [, t] = useLang();
+      return (
+        <div>
+          <Nav current="pos" />
+
+          {/* Hero */}
+          <div className="page">
+            <div className="home-hero-grid" style={{ padding: '60px 0 40px' }}>
+              <div className="home-hero-text">
+                <div className="eyebrow"><span className="dot" style={{ background: '#242424', boxShadow: '0 0 0 3px rgba(36,36,36,0.12)' }}></span>{t.pos.eyebrow}</div>
+                <h1>{t.pos.title}</h1>
+                <p>{t.pos.sub}</p>
+                <div className="actions">
+                  <a href="mailto:sanja@adrinaut.com" className="btn btn-primary">{t.pos.ctaPrimary}</a>
+                  <a href="#pricing" className="btn btn-ghost">{t.pos.ctaGhost}</a>
+                </div>
+                <div className="home-hero-stats">
+                  <div className="home-hero-stat"><div className="n">300+</div><div className="l">{t.home.trustUsers}</div></div>
+                  <div className="home-hero-stat"><div className="n">12+</div><div className="l">{t.home.trustYears}</div></div>
+                </div>
+              </div>
+              <PhoneMock />
+            </div>
+          </div>
+
+          {/* Hardware strip */}
+          <div className="page" style={{ paddingTop: 40, paddingBottom: 40 }}>
+            <div style={{
+              display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16,
+              padding: 32, background: 'var(--gray-50)', borderRadius: 16, alignItems: 'center'
+            }}>
+              {[
+                { t: "Android", s: "Mobitel ili tablet", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><rect x="6" y="3" width="12" height="18" rx="2" /><line x1="10" y1="18" x2="14" y2="18" /></svg> },
+                { t: "Bluetooth štampač", s: "79×110×45mm · 1500mAh", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><rect x="4" y="9" width="16" height="10" rx="1" /><rect x="6" y="3" width="12" height="6" /><line x1="8" y1="14" x2="16" y2="14" /></svg> },
+                { t: "Fiskalizacija", s: "Internet veza ·FINA certifikat · Porezna", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><path d="M9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg> },
+              ].map((x, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                  <div style={{ width: 48, height: 48, background: '#fff', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-ring)' }}>{x.i}</div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 15, letterSpacing: 0.2 }}>{x.t}</div>
+                    <div style={{ fontFamily: 'var(--font-body)', fontSize: 12.5, color: 'var(--fg-3)', marginTop: 2 }}>{x.s}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Pricing */}
+          <div className="page tk-section" id="pricing">
+            <div className="section-head-lg">
+              <div className="tk-eyebrow">Cjenik</div>
+              <h2>Bez kablova, sa mobitela ili tableta.</h2>
+              <p>Aplikacija je besplatna — plaćate održavanje onoliko mjeseci koliko koristite.</p>
+            </div>
+            <div className="tk-pricing">
+              <Price cat="TAKUIN POS" title="Aplikacija" amount="20" per="mjesečno" features={[
+                "20 EUR mjesečno održavanje",
+                "1 aplikacija — jedan uređaj",
+                "Izdavanje računa u hodu",
+                "Pohrana podataka u oblaku",
+              ]} desc="Fiskalna blagajna koja omogućava izdavanje i fiskalizaciju računa. Podaci se pohranjuju u oblak i brzo prebacuju na drugi uređaj u slučaju gubitka."
+                cta="Zatraži ponudu" />
+              <Price cat="TAKUIN POS" title="Aplikacija" amount="120" per="godišnje" featured features={[
+                "120 EUR godišnje održavanje",
+                "Jednokratno plaćanje",
+                "1 aplikacija — jedan uređaj",
+                "Izdavanje računa u hodu",
+                "Pohrana podataka u oblaku",
+              ]} desc="Godišnja pretplata s dodatnom uštedom. Idealno za poslovanja koja rade cijelu sezonu."
+                cta="Zatraži ponudu" />
+              <Price cat="Nadglednik" title="Aplikacija" amount="65" per="mjesečno" features={[
+                "65 EUR mjesečno",
+                "Praćenje poslovanja online",
+                "Po lokacijama i djelatnicima",
+                "Po rekvizitima i sadržajima",
+              ]} desc="NADGLEDNIK omogućava praćenje sa udaljenosti — izdanih računa, ponuda i prometa."
+                cta="Zatraži ponudu" />
+            </div>
+            <div style={{ height: 32 }}></div>
+            <div className="tk-pricing">
+              <Price cat="Usluga" title="Podešavanje sustava" amount="40" per="jednokratno" features={[
+                "Instalacija i podešavanje",
+                "U uredu ili putem telefona",
+                "Edukacija korisnika",
+              ]} desc="Kako bi bez stresa startali posao, sve vam podešavamo za rad."
+                cta="Naruči" />
+              <Price cat="Hardware" title="Prijenosni štampač" amount="120" per="jednokratno" features={[
+                "Jamstvo 12 mjeseci",
+                "Baterija 1500mAh, 7.4V",
+                "Dimenzije 79×110×45mm",
+                "Bluetooth povezivanje",
+              ]} desc="Kupujete jednokratno. Povezuje se s aplikacijom za ispis računa, izvještaja i naloga."
+                cta="Naruči" />
+              <Price cat="Usluga" title="Telefonska podrška" amount="20" per="po intervenciji" features={[
+                "20 EUR — 15 do 30 min",
+                "40 EUR — 30 do 60 min",
+                "Sve greške izvođača — besplatno",
+              ]} desc="Podešavanje sustava, edukacija korisnika i rješavanje svih problema u radu."
+                cta="Kontakt" />
+            </div>
+            <div style={{ marginTop: 32, padding: '16px 20px', background: 'var(--gray-50)', borderRadius: 12, fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--fg-3)', textAlign: 'center' }}>
+              {t.pricing.note}
+            </div>
+          </div>
+
+          {/* Features */}
+          <div className="page tk-section" style={{ paddingTop: 32 }}>
+            <div className="section-head-lg">
+              <div className="tk-eyebrow">Zašto TAKUIN POS?</div>
+              <h2>Pouzdano, sigurno, provjereno.</h2>
+            </div>
+            <div className="tk-features-3">
+              {t.pos.features.map((f, i) => <Feature key={i} title={f.t} items={f.b} />)}
+            </div>
+          </div>
+
+          {/* FAQ */}
+          <div className="page tk-section-sm">
+            <div className="section-head-lg">
+              <h2>{t.faq.title}</h2>
+            </div>
+            <Faq items={FAQ_HR} />
+          </div>
+
+          <div className="page tk-section-sm">
+            <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton} />
+          </div>
+
+          <Footer />
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+
+</html>

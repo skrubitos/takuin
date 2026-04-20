@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="hr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O nama — TAKUIN</title>
+  <link rel="stylesheet" href="styles/foundations.css">
+  <link rel="stylesheet" href="styles/site.css">
+</head>
+
+<body>
+  <div id="root" data-screen-label="06 About"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+  <script type="text/babel" src="components/i18n.jsx"></script>
+  <script type="text/babel" src="components/Nav.jsx"></script>
+  <script type="text/babel" src="components/Pieces.jsx"></script>
+  <script type="text/babel">
+    function App() {
+      const [, t] = useLang();
+      return (
+        <div>
+          <Nav current="about" />
+          <div className="page tk-sub-hero">
+            <div className="eyebrow"><span className="dot" style={{ background: '#242424' }}></span>{t.about.eyebrow}</div>
+            <h1>{t.about.title}</h1>
+            <p>{t.about.sub}</p>
+          </div>
+
+          <div className="page tk-section" style={{ paddingTop: 32 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+              <div className="card" style={{ padding: 32 }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 600, letterSpacing: -1, color: 'var(--fg-1)' }}>Mali Mol</div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--fg-3)', marginTop: 4, marginBottom: 20 }}>{t.about.maliMolRole}</div>
+                <p style={{ color: 'var(--fg-2)', fontSize: 15, lineHeight: 1.6 }}>
+                  {t.about.maliMolDesc}
+                </p>
+              </div>
+              <div className="card" style={{ padding: 32 }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 600, letterSpacing: -1, color: 'var(--fg-1)' }}>Adrinaut</div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--fg-3)', marginTop: 4, marginBottom: 20 }}>{t.about.adrinautRole}</div>
+                <p style={{ color: 'var(--fg-2)', fontSize: 15, lineHeight: 1.6 }}>
+                  {t.about.adrinautDesc}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="page tk-section-sm">
+            <div className="section-head-lg">
+              <div className="tk-eyebrow">Naša misija</div>
+              <h2>Praktična rješenja razvijena na terenu.</h2>
+              <p>Sve TAKUIN aplikacije razvijene su zajedno s partnerima koji ih svakodnevno koriste — od iznajmljivača ležaljki i bicikala do lučkih uprava i ugostitelja. Rezultat je sustav koji prati dinamiku stvarnog rada.</p>
+            </div>
+            <div className="tk-features-3">
+              <Feature title="25+ godina iskustva" items={[
+                "Razvoj poslovnih sustava od 1999.",
+                "Prisutnost na tržištu RH",
+                "Provjereno u širokoj primjeni",
+              ]} />
+              <Feature title="Partnerski pristup" items={[
+                "Savjetovanje o opremi — besplatno",
+                "Nabavka hardware-a po potrebi",
+                "Kompletna usluga, jedan sugovornik",
+              ]} />
+              <Feature title="Sigurnost i podrška" items={[
+                "Podaci u oblaku",
+                "Remote tehnička podrška",
+                "Dugoročno partnerstvo",
+              ]} />
+            </div>
+          </div>
+
+          <div className="page tk-section-sm">
+            <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton} />
+          </div>
+
+          <Footer />
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+
+</html>

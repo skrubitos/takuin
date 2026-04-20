@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="hr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAKUIN — Poslovanje u hodu</title>
+  <link rel="stylesheet" href="styles/foundations.css">
+  <link rel="stylesheet" href="styles/site.css">
+  <link rel="stylesheet" href="styles/phone.css">
+  <style>
+    /* Home-specific accents */
+    .home-hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 48px;
+      align-items: center;
+      padding: 72px 0 40px;
+    }
+
+    @media (max-width: 980px) {
+      .home-hero-grid {
+        grid-template-columns: 1fr;
+        padding: 40px 0;
+        text-align: center;
+      }
+
+      .home-hero-grid .phone-shell {
+        order: 2;
+      }
+    }
+
+    .home-hero-text h1 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(44px, 6.5vw, 80px);
+      line-height: 1;
+      letter-spacing: -2px;
+      color: var(--fg-1);
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    .home-hero-text h1 .line2 {
+      color: var(--fg-1);
+    }
+
+    .home-hero-text .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--fg-3);
+      margin-bottom: 24px;
+    }
+
+    .home-hero-text .eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      background: #0A6C5F;
+      box-shadow: 0 0 0 3px rgba(10, 108, 95, 0.15);
+    }
+
+    .home-hero-text p {
+      margin-top: 22px;
+      color: var(--fg-3);
+      font-size: 18px;
+      line-height: 1.5;
+      max-width: 520px;
+    }
+
+    @media (max-width: 980px) {
+      .home-hero-text p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .home-hero-text .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .home-hero-text .actions {
+        justify-content: center;
+      }
+    }
+
+    .home-hero-text .meta {
+      margin-top: 18px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--fg-3);
+    }
+
+    /* --- Hero Variant B: Typographic centered --- */
+    .hero-B {
+      padding: 96px 0 40px;
+      text-align: center;
+    }
+
+    .hero-B .phone-shell {
+      margin-top: 32px;
+    }
+
+    .hero-B h1 {
+      font-size: clamp(54px, 9vw, 120px);
+      letter-spacing: -3px;
+      line-height: 0.95;
+    }
+
+    /* --- Hero Variant C: Product grid first --- */
+    .hero-C {
+      padding: 64px 0 32px;
+    }
+
+    .hero-C .tk-hero-title {
+      font-size: clamp(38px, 5vw, 56px);
+      letter-spacing: -1px;
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .home-hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 36px;
+      background: var(--gray-50);
+      border-radius: 14px;
+      padding: 4px;
+      box-shadow: inset 0 0 0 1px rgba(34, 42, 53, 0.05);
+    }
+
+    .home-hero-stat {
+      padding: 18px 16px;
+      background: var(--white);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(34, 42, 53, 0.04);
+    }
+
+    .home-hero-stat+.home-hero-stat {
+      margin-left: 4px;
+    }
+
+    .home-hero-stat .n {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 32px;
+      color: var(--fg-1);
+      line-height: 1;
+      letter-spacing: -1px;
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+
+    .home-hero-stat .n::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      background: var(--accent, #242424);
+      margin-left: 6px;
+      align-self: center;
+      opacity: 0.5;
+    }
+
+    .home-hero-stat .l {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--fg-3);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 980px) {
+      .home-hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .home-hero-stat+.home-hero-stat {
+        margin-left: 0;
+        margin-top: 4px;
+      }
+    }
+
+    .product-accent-pos {
+      color: #242424;
+    }
+
+    .product-accent-rent {
+      color: #1E5A8A;
+    }
+
+    .product-accent-port {
+      color: #0A6C5F;
+    }
+
+    .product-accent-poskok {
+      color: #7A1E1E;
+    }
+
+    .section-head-lg {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 56px;
+    }
+
+    .section-head-lg h2 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(32px, 4.2vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--fg-1);
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    .section-head-lg p {
+      margin-top: 16px;
+      color: var(--fg-3);
+      font-size: 17px;
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root" data-screen-label="01 Home"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="components/i18n.jsx"></script>
+  <script type="text/babel" src="components/Nav.jsx"></script>
+  <script type="text/babel" src="components/PhoneMock.jsx"></script>
+  <script type="text/babel" src="components/Pieces.jsx"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // Provjera je li i18n učitan (pomaže pri debugiranju)
+    if (typeof useLang === 'undefined' && typeof window.useLang === 'undefined') {
+      console.error("Greška: i18n.jsx nije učitan. Provjerite koristite li lokalni server (http://).");
+    }
+
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "heroVariant": "B"
+    }/*EDITMODE-END*/;
+
+    function HeroA() {
+      const [, t] = useLang();
+      return (
+        <div className="page">
+          <div className="home-hero-grid">
+            <div className="home-hero-text">
+              <div className="eyebrow"><span className="dot"></span>{t.home.heroEyebrow}</div>
+              <h1>
+                {t.home.heroTitle[0]}<br />
+                <span className="line2">{t.home.heroTitle[1]}</span>
+              </h1>
+              <p>{t.home.heroSub}</p>
+              <div className="actions">
+                <a href="mailto:sanja@adrinaut.com" className="btn btn-primary">{t.home.heroCtaPrimary}</a>
+                <a href="#products" className="btn btn-ghost">{t.home.heroCtaGhost}</a>
+              </div>
+              <div className="meta">{t.home.heroMeta}</div>
+              <div className="home-hero-stats">
+                <div className="home-hero-stat"><div className="n">300+</div><div className="l">{t.home.trustUsers}</div></div>
+                <div className="home-hero-stat"><div className="n">12+</div><div className="l">{t.home.trustYears}</div></div>
+                <div className="home-hero-stat"><div className="n">25+</div><div className="l">{t.home.trustDev}</div></div>
+              </div>
+            </div>
+            <PhoneMock />
+          </div>
+        </div>
+      );
+    }
+
+    function HeroB() {
+      const [, t] = useLang();
+      return (
+        <div className="page hero-B">
+          <div className="home-hero-text" style={{ textAlign: 'center' }}>
+            <div className="eyebrow" style={{ justifyContent: 'center' }}><span className="dot"></span>{t.home.heroEyebrow}</div>
+            <h1>{t.home.heroTitle[0]}<br />{t.home.heroTitle[1]}</h1>
+            <p style={{ margin: '22px auto 0' }}>{t.home.heroSub}</p>
+            <div className="actions" style={{ justifyContent: 'center' }}>
+              <a href="mailto:sanja@adrinaut.com" className="btn btn-primary">{t.home.heroCtaPrimary}</a>
+              <a href="#products" className="btn btn-ghost">{t.home.heroCtaGhost}</a>
+            </div>
+          </div>
+          <PhoneMock />
+        </div>
+      );
+    }
+
+    function HeroC() {
+      const [, t] = useLang();
+      return (
+        <div className="page hero-C">
+          <h1 className="tk-hero-title">{t.home.productsTitle}</h1>
+          <p style={{ maxWidth: 620, margin: '20px auto 40px', textAlign: 'center', color: 'var(--fg-3)', fontSize: 17, lineHeight: 1.5 }}>{t.home.productsSub}</p>
+          <ProductGrid />
+          <div style={{ textAlign: 'center', marginTop: 28 }}>
+            <a href="mailto:sanja@adrinaut.com" className="btn btn-primary">{t.home.heroCtaPrimary}</a>
+          </div>
+        </div>
+      );
+    }
+
+    function ProductGrid() {
+      const [, t] = useLang();
+      const cards = [
+        { k: "pos", href: "pos.html", tag: t.home.productPosTag, title: t.home.productPosTitle, desc: t.home.productPosDesc, icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="3" /><line x1="9" y1="18" x2="15" y2="18" /><line x1="9" y1="6" x2="15" y2="6" /></svg> },
+        { k: "rent", href: "rent.html", tag: t.home.productRentTag, title: t.home.productRentTitle, desc: t.home.productRentDesc, icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="15" r="4" /><circle cx="18" cy="15" r="4" /><path d="m6 15 6-8 6 8" /><path d="M9 7h6" /></svg> },
+        { k: "port", href: "port.html", tag: t.home.productPortTag, title: t.home.productPortTitle, desc: t.home.productPortDesc, icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17 Q7 14 12 17 T21 17" /><path d="M12 3v14" /><path d="M12 3 19 13h-7" /><path d="M3 21 Q7 18 12 21 T21 21" /></svg> },
+        { k: "poskok", href: "poskok.html", tag: t.home.productPoskokTag, title: t.home.productPoskokTitle, desc: t.home.productPoskokDesc, icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="13" rx="2" /><line x1="6" y1="21" x2="18" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg> },
+      ];
+      return (
+        <div className="tk-products" id="products">
+          {cards.map(c => (
+            <a key={c.k} href={c.href} className="tk-product-card" data-product={c.k}>
+              <span className="tag">{c.tag}</span>
+              <span className="tk-product-icon">{c.icon}</span>
+              <h3>{c.title}</h3>
+              <div className="desc">{c.desc}</div>
+              <span className="cta">{t.home.productCta} <span className="arrow">→</span></span>
+            </a>
+          ))}
+        </div>
+      );
+    }
+
+    function Why() {
+      const [, t] = useLang();
+      return (
+        <div className="page tk-section">
+          <div className="section-head-lg">
+            <div className="tk-eyebrow">{t.home.whyTitle}</div>
+            <h2>{t.home.whySub}</h2>
+          </div>
+          <div className="tk-features-3">
+            <Feature title={t.home.why1Title} items={t.home.why1} />
+            <Feature title={t.home.why2Title} items={t.home.why2} />
+            <Feature title={t.home.why3Title} items={t.home.why3} />
+          </div>
+        </div>
+      );
+    }
+
+    function Testimonials() {
+      const [, t] = useLang();
+      return (
+        <div className="page tk-section-sm">
+          <div className="section-head-lg">
+            <h2>{t.home.testimonialsTitle}</h2>
+          </div>
+          <div className="tk-testimonials">
+            <Testimonial
+              quote="TAKUIN RENT je najbolji provjereni sustav koji je neophodan za rad svim iznajmljivačima sadržaja u turizmu. Poslovanje je organizirano, jednostavno i profesionalno."
+              name="Milivoj Dabić" role="Regionalni partner WIBIT-a" initials="MD" />
+            <Testimonial
+              quote="TAKUIN RENT omogućava u svakom trenu od bilo kuda praćenje poslovanja lokacija, djelatnika, sadržaja. Napokon sustav koji prati našu dinamiku rada."
+              name="Misael Udovičić" role="Regionalni partner WIBIT-a" initials="MU" />
+          </div>
+        </div>
+      );
+    }
+
+    function Tweaks({ state, setState }) {
+      const [open, setOpen] = useState(false);
+      useEffect(() => {
+        const h = (e) => {
+          if (e.data?.type === '__activate_edit_mode') setOpen(true);
+          if (e.data?.type === '__deactivate_edit_mode') setOpen(false);
+        };
+        window.addEventListener('message', h);
+        window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+        return () => window.removeEventListener('message', h);
+      }, []);
+      const set = (k, v) => {
+        setState({ ...state, [k]: v });
+        window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
+      };
+      if (!open) return null;
+      return (
+        <div className="tk-tweaks open">
+          <h4>Tweaks</h4>
+          <label>Hero varijanta</label>
+          <div className="opts">
+            <button className={state.heroVariant === 'A' ? 'on' : ''} onClick={() => set('heroVariant', 'A')}>Split</button>
+            <button className={state.heroVariant === 'B' ? 'on' : ''} onClick={() => set('heroVariant', 'B')}>Tipografska</button>
+            <button className={state.heroVariant === 'C' ? 'on' : ''} onClick={() => set('heroVariant', 'C')}>Grid-first</button>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [, t] = useLang();
+      const [state, setState] = useState(TWEAK_DEFAULTS);
+      return (
+        <div>
+          <Nav current="home" />
+          {state.heroVariant === 'A' && <HeroA />}
+          {state.heroVariant === 'B' && <HeroB />}
+          {state.heroVariant === 'C' && <HeroC />}
+
+          {state.heroVariant !== 'C' && (
+            <div className="page tk-section" id="products">
+              <div className="section-head-lg">
+                <div className="tk-eyebrow">{t.home.productsEyebrow}</div>
+                <h2>{t.home.productsTitle}</h2>
+                <p>{t.home.productsSub}</p>
+              </div>
+              <ProductGrid />
+            </div>
+          )}
+
+          <Why />
+          <Testimonials />
+
+          <div className="page tk-section-sm">
+            <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton} ghost={t.home.ctaGhost} />
+          </div>
+
+          <Footer />
+          <Tweaks state={state} setState={setState} />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+
+</html>

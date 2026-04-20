@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POSKOK — Desktop blagajna</title>
+<link rel="stylesheet" href="styles/foundations.css">
+<link rel="stylesheet" href="styles/site.css">
+<link rel="stylesheet" href="styles/phone.css">
+<style>
+.desktop-mock { background: var(--white); border-radius: 16px; box-shadow: var(--shadow-card); overflow: hidden; max-width: 560px; margin: 0 auto; }
+.desktop-chrome { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,0.06); background: var(--gray-50); }
+.desktop-chrome span { width: 10px; height: 10px; border-radius: 9999px; background: #ccc; }
+.desktop-body { padding: 16px; display: grid; grid-template-columns: 140px 1fr; gap: 12px; min-height: 320px; }
+.desktop-side { display: flex; flex-direction: column; gap: 4px; }
+.desktop-side .item { padding: 8px 10px; font-family: var(--font-body); font-size: 12px; color: var(--fg-3); border-radius: 6px; cursor: pointer; }
+.desktop-side .item.on { background: var(--charcoal); color: #fff; font-weight: 600; }
+.desktop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.desktop-tile { background: var(--gray-50); border-radius: 8px; padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; cursor: pointer; transition: background 180ms; }
+.desktop-tile:hover { background: #eaeaea; }
+.desktop-tile .n { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--fg-1); }
+.desktop-tile .p { font-family: var(--font-display); font-size: 14px; color: var(--fg-1); letter-spacing: 0.2px; }
+</style>
+</head>
+<body>
+<div id="root" data-screen-label="05 Poskok"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="components/i18n.jsx"></script>
+<script type="text/babel" src="components/Nav.jsx"></script>
+<script type="text/babel" src="components/Pieces.jsx"></script>
+<script type="text/babel">
+const FAQ_HR = [
+  { q: "Što je POSKOK?", a: "Moderna desktop blagajna za ugostiteljstvo i trgovinu — kasa koja radi na Windows računalu s ekranom osjetljivim na dodir ili mišem." },
+  { q: "Tko koristi POSKOK?", a: "Restorani, kafići, trgovine, specijalizirane trgovine i ostala mjesta koja trebaju stabilan, provjeren desktop sustav." },
+  { q: "Koja je razlika u odnosu na TAKUIN POS?", a: "TAKUIN POS je mobilna blagajna za Android uređaje. POSKOK je stacionarni sustav za pult — za ugostiteljstvo i trgovinu." },
+  { q: "Da li je uključena fiskalizacija?", a: "Da. POSKOK podržava fiskalizaciju sukladno propisima RH." },
+  { q: "Administracija i izvještaji?", a: "Kompletna administracija — skladište, cjenik, djelatnici, izvještaji prometa, PDV evidencija." },
+  { q: "Koliko košta?", a: "Zatražite neobvezujuću ponudu. Instalacija je jednokratna, održavanje mjesečno." },
+];
+
+function DesktopMock() {
+  const [tab, setTab] = React.useState(0);
+  const tabs = ["Prodaja", "Skladište", "Djelatnici", "Izvještaji", "Cjenik"];
+  const items = [
+    { n: "Espresso", p: "1,20" }, { n: "Cappuccino", p: "1,80" }, { n: "Macchiato", p: "1,50" },
+    { n: "Čaj", p: "1,50" }, { n: "Kroasan", p: "1,80" }, { n: "Sok", p: "2,50" },
+    { n: "Burek", p: "2,20" }, { n: "Sendvič", p: "3,50" }, { n: "Kolač", p: "2,80" },
+  ];
+  return (
+    <div className="desktop-mock">
+      <div className="desktop-chrome">
+        <span></span><span></span><span></span>
+        <div style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)' }}>POSKOK v4.2 · Kafić Jadran</div>
+      </div>
+      <div className="desktop-body">
+        <div className="desktop-side">
+          {tabs.map((lbl, i) => (
+            <div key={i} className={`item ${i === tab ? "on" : ""}`} onClick={() => setTab(i)}>{lbl}</div>
+          ))}
+        </div>
+        <div>
+          <div className="desktop-grid">
+            {items.map((it, i) => (
+              <div key={i} className="desktop-tile">
+                <span className="n">{it.n}</span>
+                <span className="p">€{it.p}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 12, padding: '10px 12px', background: 'var(--charcoal)', color: '#fff', borderRadius: 8, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-display)', fontSize: 16 }}>
+            <span>Ukupno</span><span>€8,50</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [, t] = useLang();
+  return (
+    <div>
+      <Nav current="poskok"/>
+      <div className="page">
+        <div className="home-hero-grid" style={{ padding: '60px 0 40px' }}>
+          <div className="home-hero-text">
+            <div className="eyebrow"><span className="dot" style={{ background: '#7A1E1E', boxShadow: '0 0 0 3px rgba(122,30,30,0.15)' }}></span>{t.poskok.eyebrow}</div>
+            <h1>{t.poskok.title}</h1>
+            <p>{t.poskok.sub}</p>
+            <div className="actions">
+              <a href="mailto:sanja@adrinaut.com" className="btn btn-primary">{t.poskok.ctaPrimary}</a>
+              <a href="#pricing" className="btn btn-ghost">{t.poskok.ctaGhost}</a>
+            </div>
+            <div className="home-hero-stats">
+              <div className="home-hero-stat"><div className="n">400+</div><div className="l">korisnika</div></div>
+              <div className="home-hero-stat"><div className="n">20+</div><div className="l">godina na tržištu</div></div>
+            </div>
+          </div>
+          <DesktopMock/>
+        </div>
+      </div>
+
+      <div className="page tk-section" id="pricing">
+        <div className="section-head-lg">
+          <div className="tk-eyebrow">Cjenik</div>
+          <h2>Za ugostiteljstvo i trgovinu.</h2>
+        </div>
+        <div className="tk-pricing">
+          <Price cat="POSKOK" title="Blagajna" amount="360" per="jednokratno" features={[
+            "Licenca POSKOK",
+            "Fiskalizacija uključena",
+            "Skladište i cjenik",
+            "Izvještaji prometa",
+          ]} desc="Jednokratna licenca za desktop blagajnu." cta="Zatraži ponudu"/>
+          <Price cat="Održavanje" title="Mjesečno" amount="50" per="mjesečno" featured features={[
+            "Ažuriranja sustava",
+            "Tehnička podrška",
+            "Remote intervencije",
+          ]} desc="Redovno održavanje i podrška za stabilan rad." cta="Zatraži ponudu"/>
+          <Price cat="Usluga" title="Podešavanje" amount="40" per="jednokratno" features={[
+            "Instalacija i postavka",
+            "Unos cjenika",
+            "Edukacija korisnika",
+          ]} desc="Sve postavljamo za rad kako biste mogli odmah raditi." cta="Naruči"/>
+        </div>
+      </div>
+
+      <div className="page tk-section">
+        <div className="section-head-lg">
+          <div className="tk-eyebrow">Zašto POSKOK?</div>
+          <h2>Provjereno rješenje diljem Hrvatske.</h2>
+        </div>
+        <div className="tk-features-3">
+          <Feature title="Stabilnost" items={[
+            "20+ godina na tržištu",
+            "400+ aktivnih korisnika",
+            "Provjereno u dnevnom radu",
+          ]}/>
+          <Feature title="Kompletna administracija" items={[
+            "Skladište i cjenik",
+            "Djelatnici i smjene",
+            "Izvještaji prometa",
+            "PDV evidencija",
+          ]}/>
+          <Feature title="Podrška" items={[
+            "Remote intervencije",
+            "Telefonska podrška",
+            "Redovna ažuriranja",
+          ]}/>
+        </div>
+      </div>
+
+      <div className="page tk-section-sm">
+        <div className="section-head-lg"><h2>{t.faq.title}</h2></div>
+        <Faq items={FAQ_HR}/>
+      </div>
+
+      <div className="page tk-section-sm">
+        <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton}/>
+      </div>
+
+      <Footer/>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
