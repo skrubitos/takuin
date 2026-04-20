@@ -67,6 +67,16 @@ const DICT = {
       ctaSub: "Pravovremena priprema ništa ne košta — samo vas oslobađa stresa. Javite nam što iznajmljujete, koliko lokacija imate, i dobit ćete neobvezujuću ponudu u najkraćem roku.",
       ctaButton: "Pošaljite upit",
       ctaGhost: "Ispuni obrazac",
+      phoneStory: {
+        eyebrow: "Aplikacija u akciji",
+        title: "Od prvog klika do fiskalnog računa — u par sekundi.",
+        steps: [
+          { title: "Sve na jednom ekranu", body: "Promet, ponude i nadglednik — pregled cijelog dana čim otvorite aplikaciju." },
+          { title: "Brz izbor iz kataloga", body: "Pretraga, kategorije i česti artikli — odaberite stavku u sekundi." },
+          { title: "Fiskalizirajte u dva klika", body: "Gotovina ili kartica, popusti i napojnica — potpis i slanje na Poreznu." },
+          { title: "Gotovo — račun poslan", body: "JIR, ZKI i kopija računa odmah. Cijeli ciklus bez čekanja." },
+        ],
+      },
     },
     pos: {
       eyebrow: "TAKUIN POS · Mobilna blagajna",
@@ -222,6 +232,16 @@ const DICT = {
       ctaSub: "Preparing on time costs nothing — and spares you the stress. Tell us what you rent and how many locations you have; we'll send a no-obligation quote.",
       ctaButton: "Send inquiry",
       ctaGhost: "Fill the form",
+      phoneStory: {
+        eyebrow: "The app in action",
+        title: "From the first tap to a fiscal receipt — in seconds.",
+        steps: [
+          { title: "Everything on one screen", body: "Revenue, offers and oversight — your whole day at a glance the moment you open the app." },
+          { title: "Fast pick from the catalog", body: "Search, categories and frequent items — select a product in a second." },
+          { title: "Fiscalize in two taps", body: "Cash or card, discounts and tips — signed and sent to the tax authority." },
+          { title: "Done — receipt delivered", body: "JIR, ZKI and a receipt copy instantly. The whole cycle, no waiting." },
+        ],
+      },
     },
     pos: {
       eyebrow: "TAKUIN POS · Mobile POS",
@@ -318,6 +338,9 @@ const getLang = () => (localStorage.getItem("takuin_lang") || "hr");
 const setLang = (l) => {
   localStorage.setItem("takuin_lang", l);
   window.dispatchEvent(new CustomEvent("takuin:lang", { detail: l }));
+  // ScrollTrigger/ScrollSmoother moraju refreshati sve trigger pozicije nakon
+  // promjene jezika jer se visina sadržaja mijenja.
+  setTimeout(() => window.dispatchEvent(new CustomEvent("takuin:relayout")), 50);
 };
 
 function useLang() {

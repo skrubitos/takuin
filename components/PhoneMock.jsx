@@ -1,21 +1,27 @@
 // Interactive Android phone mockup showcasing a fiscal POS app.
 // Multiple screens; click-through. Used on home page hero and POS page.
 
-function PhoneMock({ app = "pos" }) {
-  const [screen, setScreen] = React.useState(0);
+function PhoneMock({ app = "pos", screen: controlled }) {
+  const [internal, setInternal] = React.useState(0);
   const [selItem, setSelItem] = React.useState(null);
+  const isControlled = controlled !== undefined && controlled !== null;
+  const screen = isControlled ? controlled : internal;
 
-  // Auto-advance the demo every 4s unless user interacts
+  // Auto-advance the demo every 4s unless user interacts — disabled when controlled by parent.
   const [paused, setPaused] = React.useState(false);
   React.useEffect(() => {
-    if (paused) return;
+    if (isControlled || paused) return;
     const id = setInterval(() => {
-      setScreen((s) => (s + 1) % 4);
+      setInternal((s) => (s + 1) % 4);
     }, 4200);
     return () => clearInterval(id);
-  }, [paused]);
+  }, [paused, isControlled]);
 
-  const go = (s) => { setPaused(true); setScreen(s); };
+  const go = (s) => {
+    if (isControlled) return;
+    setPaused(true);
+    setInternal(s);
+  };
 
   return (
     <div className="phone-shell" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>

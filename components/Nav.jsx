@@ -22,7 +22,10 @@ function Nav({ current = "home" }) {
     { k: "about",  href: "about.html",    label: t.nav.about },
   ];
 
-  return (
+  // Nav mora živjeti izvan #smooth-wrapper da sticky radi sa ScrollSmootherom.
+  const navRoot = typeof document !== 'undefined' ? document.getElementById('nav-root') : null;
+
+  const navEl = (
     <nav className="tk-nav" data-screen-label="Nav">
       <div className="tk-nav-inner">
         <div className="tk-nav-left">
@@ -72,6 +75,8 @@ function Nav({ current = "home" }) {
       </div>
     </nav>
   );
+
+  return navRoot ? ReactDOM.createPortal(navEl, navRoot) : navEl;
 }
 
 function Footer() {

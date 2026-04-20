@@ -297,6 +297,130 @@ section {
   text-align: left;
 }
 
+/* ---------- Phone storytelling (scrollytelling) ---------- */
+.phone-story {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+.phone-story-intro {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+
+.phone-story-intro h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(32px, 4.2vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--fg-1);
+  margin: 8px 0 0;
+  text-wrap: balance;
+}
+
+.phone-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.phone-story-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+}
+
+.phone-story-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-story-step {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  opacity: 0.35;
+  transform: translateY(8px);
+  transition: opacity 450ms var(--ease-out), transform 450ms var(--ease-out);
+}
+
+.phone-story-step.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.phone-story-step .num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--fg-3);
+}
+
+.phone-story-step h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.8px;
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.phone-story-step p {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--fg-3);
+  max-width: 440px;
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .phone-story {
+    padding: 40px 16px 64px;
+  }
+
+  .phone-story-intro {
+    margin-bottom: 28px;
+  }
+
+  .phone-story-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .phone-story-stage {
+    min-height: 0;
+    position: static !important;
+    transform: none !important;
+  }
+
+  .phone-story-steps {
+    gap: 24px;
+  }
+
+  .phone-story-step {
+    min-height: 0;
+    padding: 0;
+    opacity: 1;
+    transform: none;
+    text-align: center;
+    align-items: center;
+  }
+
+  .phone-story-step p {
+    margin: 0 auto;
+  }
+}
+
 /* ---------- Sections ---------- */
 .tk-section {
   padding: 96px 0;
