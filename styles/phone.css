@@ -5,7 +5,7 @@
   perspective: 1400px;
 }
 .phone-bezel {
-  width: 300px;
+  width: min(300px, 88vw);
   background: #0a0a0a;
   border-radius: 38px;
   padding: 10px;
@@ -194,3 +194,7 @@
 }
 .tk-hero-split p { margin-top: 22px; color: var(--fg-3); font-size: 18px; line-height: 1.5; max-width: 520px; }
 @media (max-width: 960px) { .tk-hero-split p { margin-left: auto; margin-right: auto; } }
+@media (max-width: 560px) {
+  .tk-hero-split { gap: 24px; padding: 32px 0; }
+  .tk-hero-split p { font-size: 16px; margin-top: 16px; }
+}

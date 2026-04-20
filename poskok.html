@@ -20,6 +20,15 @@
 .desktop-tile:hover { background: #eaeaea; }
 .desktop-tile .n { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--fg-1); }
 .desktop-tile .p { font-family: var(--font-display); font-size: 14px; color: var(--fg-1); letter-spacing: 0.2px; }
+@media (max-width: 560px) {
+  .desktop-mock { max-width: 100%; }
+  .desktop-body { grid-template-columns: 1fr; gap: 10px; min-height: auto; padding: 12px; }
+  .desktop-side { flex-direction: row; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .desktop-side .item { white-space: nowrap; padding: 6px 10px; font-size: 11px; }
+  .desktop-grid { grid-template-columns: repeat(3, 1fr); }
+  .desktop-tile { padding: 12px 8px; }
+  .desktop-chrome { padding: 8px 10px; }
+}
 </style>
 </head>
 <body>
