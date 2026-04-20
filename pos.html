@@ -74,9 +74,9 @@
               padding: 32, background: 'var(--gray-50)', borderRadius: 16, alignItems: 'center'
             }}>
               {[
-                { t: "Android", s: "Mobitel ili tablet", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><rect x="6" y="3" width="12" height="18" rx="2" /><line x1="10" y1="18" x2="14" y2="18" /></svg> },
-                { t: "Bluetooth štampač", s: "79×110×45mm · 1500mAh", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><rect x="4" y="9" width="16" height="10" rx="1" /><rect x="6" y="3" width="12" height="6" /><line x1="8" y1="14" x2="16" y2="14" /></svg> },
-                { t: "Fiskalizacija", s: "Internet veza ·FINA certifikat · Porezna", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><path d="M9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg> },
+                { t: "Mobitel ili tablet", s: "", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><rect x="6" y="3" width="12" height="18" rx="2" /><line x1="10" y1="18" x2="14" y2="18" /></svg> },
+                { t: "Bluetooth štampač", s: "", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><rect x="4" y="9" width="16" height="10" rx="1" /><rect x="6" y="3" width="12" height="6" /><line x1="8" y1="14" x2="16" y2="14" /></svg> },
+                { t: "Internet veza", s: " FINA certifikat", i: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28" height="28"><path d="M9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg> },
               ].map((x, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                   <div style={{ width: 48, height: 48, background: '#fff', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-ring)' }}>{x.i}</div>
@@ -92,50 +92,50 @@
           {/* Pricing */}
           <div className="page tk-section" id="pricing">
             <div className="section-head-lg">
-              <div className="tk-eyebrow">Cjenik</div>
-              <h2>Bez kablova, sa mobitela ili tableta.</h2>
+              <div className="tk-eyebrow">Bez kablova, sa mobitela ili tableta</div>
+              <h2>CJENIK</h2>
               <p>Aplikacija je besplatna — plaćate održavanje onoliko mjeseci koliko koristite.</p>
             </div>
             <div className="tk-pricing">
-              <Price cat="TAKUIN POS" title="Aplikacija" amount="20" per="mjesečno" features={[
-                "20 EUR mjesečno održavanje",
+              <Price cat="" title="TAKUIN POS" amount="20" per="mjesečno" features={[
+                "Mjesečno održavanje",
                 "1 aplikacija — jedan uređaj",
                 "Izdavanje računa u hodu",
                 "Pohrana podataka u oblaku",
               ]} desc="Fiskalna blagajna koja omogućava izdavanje i fiskalizaciju računa. Podaci se pohranjuju u oblak i brzo prebacuju na drugi uređaj u slučaju gubitka."
                 cta="Zatraži ponudu" />
-              <Price cat="TAKUIN POS" title="Aplikacija" amount="120" per="godišnje" featured features={[
-                "120 EUR godišnje održavanje",
+              <Price cat="" title="TAKUIN POS" amount="100" per="godišnje" featured features={[
+                "Godišnje održavanje",
                 "Jednokratno plaćanje",
                 "1 aplikacija — jedan uređaj",
                 "Izdavanje računa u hodu",
                 "Pohrana podataka u oblaku",
               ]} desc="Godišnja pretplata s dodatnom uštedom. Idealno za poslovanja koja rade cijelu sezonu."
                 cta="Zatraži ponudu" />
-              <Price cat="Nadglednik" title="Aplikacija" amount="65" per="mjesečno" features={[
-                "65 EUR mjesečno",
+              <Price cat="" title="NADGLEDNIK" amount="65" per="mjesečno" features={[
+                
                 "Praćenje poslovanja online",
-                "Po lokacijama i djelatnicima",
-                "Po rekvizitima i sadržajima",
+                "Praćenje po lokacijama i djelatnicima",
+                "Praćenje po rekvizitima i sadržajima",
               ]} desc="NADGLEDNIK omogućava praćenje sa udaljenosti — izdanih računa, ponuda i prometa."
                 cta="Zatraži ponudu" />
             </div>
             <div style={{ height: 32 }}></div>
             <div className="tk-pricing">
-              <Price cat="Usluga" title="Podešavanje sustava" amount="40" per="jednokratno" features={[
+              <Price cat="" title="Podešavanje sustava" amount="40" per="jednokratno" features={[
                 "Instalacija i podešavanje",
                 "U uredu ili putem telefona",
                 "Edukacija korisnika",
               ]} desc="Kako bi bez stresa startali posao, sve vam podešavamo za rad."
                 cta="Naruči" />
-              <Price cat="Hardware" title="Prijenosni štampač" amount="120" per="jednokratno" features={[
+              <Price cat="" title="Prijenosni štampač" amount="120" per="jednokratno" features={[
                 "Jamstvo 12 mjeseci",
                 "Baterija 1500mAh, 7.4V",
                 "Dimenzije 79×110×45mm",
                 "Bluetooth povezivanje",
               ]} desc="Kupujete jednokratno. Povezuje se s aplikacijom za ispis računa, izvještaja i naloga."
                 cta="Naruči" />
-              <Price cat="Usluga" title="Telefonska podrška" amount="20" per="po intervenciji" features={[
+              <Price cat="" title="Telefonska podrška" amount="20" per="po intervenciji" features={[
                 "20 EUR — 15 do 30 min",
                 "40 EUR — 30 do 60 min",
                 "Sve greške izvođača — besplatno",

@@ -55,41 +55,45 @@ function App() {
           <h2>Web i Android apps za lučko poslovanje.</h2>
         </div>
         <div className="tk-pricing">
-          <Price cat="TAKUIN PORT" title="Aplikacija" amount="48" per="mjesečno" features={[
-            "48 EUR mjesečno",
+          <Price cat="" title="TAKUIN PORT" amount="48" per="mjesečno" features={[
+            "1 aplikacija - jedan uređaj",
             "Web aplikacija za administraciju",
             "Pregled plovila i vezova",
+            "Naplata pristojbi na terenu",
             "Izvještaji po lokacijama",
           ]} desc="Administracija i online monitoring lučkog poslovanja." cta="Zatraži ponudu"/>
-          <Price cat="TAKUIN PORT" title="Android rad na terenu" amount="100" per="mjesečno" featured features={[
+          <Price cat="" title="TAKUIN POS" amount="100" per="godišnje" featured features={[
             "100 EUR mjesečno",
-            "Naplata pristojbi na terenu",
+            ,
             "Evidencija plovila i vezova",
             "Sinkronizacija s web sučeljem",
             "Pohrana podataka u oblaku",
           ]} desc="Aplikacija za rad djelatnika na vezu — sve podatke o plovilima i pristojbama vodi u realnom vremenu." cta="Zatraži ponudu"/>
-          <Price cat="TAKUIN POS" title="Fiskalizacija" amount="20" per="mjesečno" features={[
-            "Izdavanje i fiskaliziranje računa",
-            "1 aplikacija po lokaciji",
-            "Pohrana u oblak",
-          ]} desc="Integrirana fiskalna blagajna." cta="Zatraži ponudu"/>
+          
         </div>
 
         <div style={{ height: 32 }}></div>
         <div className="tk-pricing">
-          <Price cat="Usluga" title="Podešavanje sustava" amount="40" per="jednokratno" features={[
+          <Price cat="" title="Podešavanje sustava" amount="40" per="jednokratno" features={[
             "Instalacija i podešavanje",
             "Edukacija djelatnika",
           ]} desc="Podešavanje lučkog sustava i integracija postojećih podataka." cta="Naruči"/>
-          <Price cat="Hardware" title="Prijenosni štampač" amount="120" per="jednokratno" features={[
-            "Jamstvo 12 mj.",
-            "79×110×45 mm",
-          ]} desc="Bluetooth štampač za ispis računa i naloga na vezu." cta="Naruči"/>
-          <Price cat="Usluga" title="Telefonska podrška" amount="20" per="po intervenciji" features={[
-            "20 EUR — 15 do 30 min",
-            "40 EUR — 30 do 60 min",
-          ]} desc="Podrška u radu i otklanjanje problema." cta="Kontakt"/>
-        </div>
+          
+          
+              <Price cat="" title="Prijenosni štampač" amount="120" per="jednokratno" features={[
+                "Jamstvo 12 mjeseci",
+                "Baterija 1500mAh, 7.4V",
+                "Dimenzije 79×110×45mm",
+                "Bluetooth povezivanje",
+              ]} desc="Kupujete jednokratno. Povezuje se s aplikacijom za ispis računa, izvještaja i naloga."
+                cta="Naruči" />
+              <Price cat="" title="Telefonska podrška" amount="20" per="po intervenciji" features={[
+                "20 EUR — 15 do 30 min",
+                "40 EUR — 30 do 60 min",
+                "Sve greške izvođača — besplatno",
+              ]} desc="Podešavanje sustava, edukacija korisnika i rješavanje svih problema u radu."
+                cta="Kontakt" />
+          </div>
       </div>
 
       <div className="page tk-section">
