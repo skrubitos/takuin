@@ -112,19 +112,22 @@
     });
   }
 
-  // Poll until React has rendered the feature elements into the DOM.
+  // Poll until React has rendered the feature elements into the DOM,
+  // then wait two rAF cycles so the browser finishes layout before
+  // ScrollTrigger calculates element positions.
   function waitForContent(cb) {
     if (document.querySelector('.tk-feat') || document.querySelector('.section-head-lg')) {
-      cb();
+      requestAnimationFrame(function () { requestAnimationFrame(cb); });
     } else {
       setTimeout(function () { waitForContent(cb); }, 50);
     }
   }
 
   function init() {
-    if (!window.gsap || !window.ScrollTrigger || !window.ScrollSmoother) return;
+    if (!window.gsap || !window.ScrollTrigger) return;
 
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+    gsap.registerPlugin(ScrollTrigger);
+    if (window.ScrollSmoother) gsap.registerPlugin(ScrollSmoother);
 
     const isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -138,6 +141,8 @@
       // ScrollTrigger i dalje radi za animacije sekcija.
       return;
     }
+
+    if (!window.ScrollSmoother) return;
 
     const wrapper = document.getElementById('smooth-wrapper');
     const content = document.getElementById('smooth-content');
