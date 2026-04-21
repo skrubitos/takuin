@@ -1693,4 +1693,115 @@ body:has(#smooth-wrapper) {
   .phone-story-stage .phone-screen {
     height: 410px;
   }
+
+/* ================ Hero stats (pos.html, poskok.html) ================ */
+.tk-hero-stats {
+  --tk-accent: var(--charcoal);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.tk-hero-stat {
+  position: relative;
+  padding: 22px 22px 20px;
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid var(--border-ring);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), border-color 220ms var(--ease-out);
+}
+
+.tk-hero-stat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--tk-accent) 8%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity 220ms var(--ease-out);
+  pointer-events: none;
+}
+
+.tk-hero-stat:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--tk-accent) 24%, var(--border-ring));
+  box-shadow: 0 10px 28px -12px color-mix(in srgb, var(--tk-accent) 30%, rgba(34, 42, 53, 0.18));
+}
+
+.tk-hero-stat:hover::before {
+  opacity: 1;
+}
+
+.tk-hero-stat-icon {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--tk-accent) 10%, var(--white));
+  color: var(--tk-accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tk-accent) 14%, transparent);
+  margin-bottom: 16px;
+}
+
+.tk-hero-stat-n {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(36px, 5vw, 44px);
+  line-height: 1;
+  letter-spacing: -1.2px;
+  color: var(--tk-accent);
+  display: flex;
+  align-items: baseline;
+  font-variant-numeric: tabular-nums;
+}
+
+.tk-hero-stat-n .suffix {
+  font-size: 0.68em;
+  opacity: 0.7;
+  margin-left: 2px;
+  letter-spacing: -0.5px;
+}
+
+.tk-hero-stat-l {
+  position: relative;
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--fg-3);
+}
+
+@media (max-width: 560px) {
+  .tk-hero-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .tk-hero-stat {
+    padding: 18px 18px 16px;
+  }
+  .tk-hero-stat-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-hero-stat,
+  .tk-hero-stat::before {
+    transition: none;
+  }
+  .tk-hero-stat:hover {
+    transform: none;
+  }
+}
 }

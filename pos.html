@@ -66,10 +66,10 @@
                   <a href="kontakt.html?p=pos" className="btn btn-primary">{t.pos.ctaPrimary}</a>
                   <a href="#pricing" className="btn btn-ghost">{t.pos.ctaGhost}</a>
                 </div>
-                <div className="home-hero-stats">
-                  <div className="home-hero-stat"><div className="n">300+</div><div className="l">{t.home.trustUsers}</div></div>
-                  <div className="home-hero-stat"><div className="n">12+</div><div className="l">{t.home.trustYears}</div></div>
-                </div>
+                <HeroStats accent="#242424" items={[
+                  { value: 300, suffix: '+', label: t.home.trustUsers, icon: 'users' },
+                  { value: 12, suffix: '+', label: t.home.trustYears, icon: 'calendar' },
+                ]} />
               </div>
               <PhoneMock />
             </div>

@@ -171,9 +171,76 @@ function CTA({ title, sub, primary, ghost, primaryHref = "kontakt.html" }) {
   );
 }
 
+function HeroStatIcon({ kind }) {
+  const props = { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", width: 20, height: 20 };
+  if (kind === "users") {
+    return (
+      <svg {...props}><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 11a3 3 0 0 0 0-6"/><path d="M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>
+    );
+  }
+  if (kind === "calendar") {
+    return (
+      <svg {...props}><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="12" cy="15" r="1.2" fill="currentColor" stroke="none"/></svg>
+    );
+  }
+  return null;
+}
+
+function HeroStatCard({ value, suffix, label, icon }) {
+  const ref = React.useRef(null);
+  const [display, setDisplay] = React.useState(0);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) { setDisplay(value); return; }
+    let rafId = 0;
+    let started = false;
+    const duration = 1400;
+    const start = () => {
+      if (started) return;
+      started = true;
+      const t0 = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setDisplay(Math.round(value * eased));
+        if (p < 1) rafId = requestAnimationFrame(tick);
+      };
+      rafId = requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) start(); });
+    }, { threshold: 0.3 });
+    io.observe(el);
+    return () => { io.disconnect(); if (rafId) cancelAnimationFrame(rafId); };
+  }, [value]);
+  return (
+    <div className="tk-hero-stat" ref={ref}>
+      <div className="tk-hero-stat-icon"><HeroStatIcon kind={icon}/></div>
+      <div className="tk-hero-stat-n">
+        <span>{display}</span>
+        {suffix && <span className="suffix">{suffix}</span>}
+      </div>
+      <div className="tk-hero-stat-l">{label}</div>
+    </div>
+  );
+}
+
+function HeroStats({ accent = "#242424", items = [] }) {
+  return (
+    <div className="tk-hero-stats" style={{ "--tk-accent": accent }}>
+      {items.map((it, i) => (
+        <HeroStatCard key={i} value={it.value} suffix={it.suffix} label={it.label} icon={it.icon}/>
+      ))}
+    </div>
+  );
+}
+
 window.Price = Price;
 window.Faq = Faq;
 window.Testimonial = Testimonial;
 window.UseCase = UseCase;
 window.Feature = Feature;
 window.CTA = CTA;
+window.HeroStats = HeroStats;
