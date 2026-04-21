@@ -9,75 +9,68 @@
 
     var isMobileView = window.matchMedia('(max-width: 768px)').matches;
 
-    // Feature columns — checkmark pop, title + bullets stagger
+    // Feature columns — each card triggers individually on mobile (stacked),
+    // all together with stagger on desktop (side-by-side grid).
     document.querySelectorAll('.tk-features-3').forEach(function (section) {
       var feats = section.querySelectorAll('.tk-feat');
       if (!feats.length) return;
 
-      var triggerStart = isMobileView ? 'top 88%' : 'top 80%';
+      if (isMobileView) {
+        // Mobile: each card has its own ScrollTrigger so it only animates
+        // when that specific card scrolls into view.
+        feats.forEach(function (feat) {
+          var trigger = { trigger: feat, start: 'top 88%', once: true };
 
-      // Card entrance
-      gsap.set(feats, { opacity: 0, y: isMobileView ? 64 : 44, scale: isMobileView ? 0.93 : 1 });
-      gsap.to(feats, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: isMobileView ? 0.7 : 0.65,
-        stagger: isMobileView ? 0.22 : 0.16,
-        ease: isMobileView ? 'back.out(1.6)' : 'power2.out',
-        scrollTrigger: { trigger: section, start: triggerStart, once: true },
-      });
+          gsap.set(feat, { opacity: 0, y: 64, scale: 0.93 });
+          gsap.to(feat, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.6)', scrollTrigger: trigger });
 
-      // Checkmark icon: scale-pop after card lands
-      feats.forEach(function (feat, i) {
-        var check = feat.querySelector('.tk-feat-check');
-        if (!check) return;
-        var cardDelay = i * (isMobileView ? 0.22 : 0.16);
-        gsap.set(check, { scale: 0, opacity: 0, rotate: -15 });
-        gsap.to(check, {
-          scale: 1,
-          opacity: 1,
-          rotate: 0,
-          duration: 0.55,
-          ease: 'back.out(2.2)',
-          delay: cardDelay + 0.18,
-          scrollTrigger: { trigger: section, start: triggerStart, once: true },
+          var check = feat.querySelector('.tk-feat-check');
+          if (check) {
+            gsap.set(check, { scale: 0, opacity: 0, rotate: -15 });
+            gsap.to(check, { scale: 1, opacity: 1, rotate: 0, duration: 0.55, ease: 'back.out(2.2)', delay: 0.18, scrollTrigger: trigger });
+          }
+
+          var title = feat.querySelector('h3');
+          if (title) {
+            gsap.set(title, { opacity: 0, y: 18 });
+            gsap.to(title, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', delay: 0.28, scrollTrigger: trigger });
+          }
+
+          var items = feat.querySelectorAll('li');
+          if (items.length) {
+            gsap.set(items, { opacity: 0, x: -20 });
+            gsap.to(items, { opacity: 1, x: 0, duration: 0.4, stagger: 0.09, ease: 'power2.out', delay: 0.38, scrollTrigger: trigger });
+          }
         });
-      });
+      } else {
+        // Desktop: all three cards visible at once → stagger from a single trigger.
+        var trigger = { trigger: section, start: 'top 80%', once: true };
 
-      // h3 title: slide in slightly after card
-      feats.forEach(function (feat, i) {
-        var title = feat.querySelector('h3');
-        if (!title) return;
-        var cardDelay = i * (isMobileView ? 0.22 : 0.16);
-        gsap.set(title, { opacity: 0, y: 18 });
-        gsap.to(title, {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          ease: 'power2.out',
-          delay: cardDelay + 0.28,
-          scrollTrigger: { trigger: section, start: triggerStart, once: true },
-        });
-      });
+        gsap.set(feats, { opacity: 0, y: 44 });
+        gsap.to(feats, { opacity: 1, y: 0, duration: 0.65, stagger: 0.16, ease: 'power2.out', scrollTrigger: trigger });
 
-      // List items: stagger in from the side
-      feats.forEach(function (feat, i) {
-        var items = feat.querySelectorAll('li');
-        if (!items.length) return;
-        var cardDelay = i * (isMobileView ? 0.22 : 0.16);
-        gsap.set(items, { opacity: 0, x: isMobileView ? -20 : 0, y: isMobileView ? 0 : 14 });
-        gsap.to(items, {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          duration: 0.4,
-          stagger: 0.09,
-          ease: 'power2.out',
-          delay: cardDelay + 0.38,
-          scrollTrigger: { trigger: section, start: triggerStart, once: true },
+        feats.forEach(function (feat, i) {
+          var cardDelay = i * 0.16;
+
+          var check = feat.querySelector('.tk-feat-check');
+          if (check) {
+            gsap.set(check, { scale: 0, opacity: 0, rotate: -15 });
+            gsap.to(check, { scale: 1, opacity: 1, rotate: 0, duration: 0.55, ease: 'back.out(2.2)', delay: cardDelay + 0.18, scrollTrigger: trigger });
+          }
+
+          var title = feat.querySelector('h3');
+          if (title) {
+            gsap.set(title, { opacity: 0, y: 18 });
+            gsap.to(title, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', delay: cardDelay + 0.28, scrollTrigger: trigger });
+          }
+
+          var items = feat.querySelectorAll('li');
+          if (items.length) {
+            gsap.set(items, { opacity: 0, y: 14 });
+            gsap.to(items, { opacity: 1, y: 0, duration: 0.4, stagger: 0.07, ease: 'power2.out', delay: cardDelay + 0.38, scrollTrigger: trigger });
+          }
         });
-      });
+      }
     });
 
     // Testimonial cards — fade-up on mobile only
