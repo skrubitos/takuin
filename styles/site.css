@@ -1673,4 +1673,12 @@ section {
     width: 24px;
     border-radius: 4px;
   }
+
+  .phone-story-stage .phone-bezel {
+    width: min(220px, 72vw);
+  }
+
+  .phone-story-stage .phone-screen {
+    height: 410px;
+  }
 }
