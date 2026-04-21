@@ -515,6 +515,7 @@
       const [isMobile, setIsMobile] = React.useState(
         () => window.matchMedia('(max-width: 768px)').matches
       );
+      const trackRef = React.useRef(null);
 
       React.useEffect(() => {
         const mq = window.matchMedia('(max-width: 768px)');
@@ -522,6 +523,85 @@
         mq.addEventListener('change', handler);
         return () => mq.removeEventListener('change', handler);
       }, []);
+
+      // JS-driven marquee with touch swipe support
+      React.useEffect(() => {
+        if (!isMobile) return;
+        const track = trackRef.current;
+        if (!track) return;
+
+        let halfWidth = track.scrollWidth / 2;
+        const onResize = () => { halfWidth = track.scrollWidth / 2; };
+        window.addEventListener('resize', onResize, { passive: true });
+
+        let x = 0;
+        let rafId = null;
+        let dragging = false;
+        let dragStartClientX = 0;
+        let dragStartX = 0;
+        let velX = 0;
+        let lastClientX = 0;
+        let lastTime = 0;
+
+        function step() {
+          if (!dragging) {
+            if (Math.abs(velX) > 0.3) {
+              x += velX;
+              velX *= 0.93;
+            } else {
+              velX = 0;
+              x -= 0.42;
+            }
+            if (halfWidth > 0) {
+              if (x <= -halfWidth) x += halfWidth;
+              if (x > 0) x -= halfWidth;
+            }
+            track.style.transform = `translateX(${x}px)`;
+          }
+          rafId = requestAnimationFrame(step);
+        }
+
+        function onStart(e) {
+          const clientX = e.touches[0].clientX;
+          dragging = true;
+          velX = 0;
+          dragStartClientX = clientX;
+          dragStartX = x;
+          lastClientX = clientX;
+          lastTime = Date.now();
+        }
+
+        function onMove(e) {
+          if (!dragging) return;
+          const clientX = e.touches[0].clientX;
+          const now = Date.now();
+          const dt = Math.max(now - lastTime, 1);
+          velX = (clientX - lastClientX) / dt * 16;
+          lastClientX = clientX;
+          lastTime = now;
+          x = dragStartX + (clientX - dragStartClientX);
+          if (halfWidth > 0) {
+            while (x > 0) x -= halfWidth;
+            while (x < -halfWidth) x += halfWidth;
+          }
+          track.style.transform = `translateX(${x}px)`;
+        }
+
+        function onEnd() { dragging = false; }
+
+        track.addEventListener('touchstart', onStart, { passive: true });
+        track.addEventListener('touchmove', onMove, { passive: true });
+        track.addEventListener('touchend', onEnd);
+        rafId = requestAnimationFrame(step);
+
+        return () => {
+          cancelAnimationFrame(rafId);
+          window.removeEventListener('resize', onResize);
+          track.removeEventListener('touchstart', onStart);
+          track.removeEventListener('touchmove', onMove);
+          track.removeEventListener('touchend', onEnd);
+        };
+      }, [isMobile]);
 
       const cards = [
         { k: "pos",    href: "pos.html",    tag: t.home.productPosTag,    title: t.home.productPosTitle,    desc: t.home.productPosDesc,    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="3" /><line x1="9" y1="18" x2="15" y2="18" /><line x1="9" y1="6" x2="15" y2="6" /></svg> },
@@ -532,8 +612,8 @@
 
       if (isMobile) {
         return (
-          <div className="tk-products-marquee" id="products">
-            <div className="tk-products-marquee-track">
+          <div className="tk-products-marquee" id="products" style={{ touchAction: 'pan-y' }}>
+            <div className="tk-products-marquee-track" ref={trackRef} style={{ animation: 'none' }}>
               {[...cards, ...cards].map((c, idx) => (
                 <a key={idx} href={c.href} className="tk-product-card-mini" data-product={c.k}>
                   <span className="tk-product-icon">{c.icon}</span>
@@ -653,7 +733,7 @@
           <Testimonials />
 
           <div className="page tk-section-sm">
-            <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton} ghost={t.home.ctaGhost} />
+            <CTA title={t.home.ctaTitle} sub={t.home.ctaSub} primary={t.home.ctaButton} />
           </div>
 
           <Footer />
