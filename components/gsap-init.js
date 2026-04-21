@@ -73,18 +73,19 @@
       }
     });
 
-    // Testimonial cards — fade-up on mobile only
+    // Testimonial cards — each card triggers individually when scrolled into view.
     document.querySelectorAll('.tk-testimonials').forEach(function (section) {
       var cards = section.querySelectorAll('.tk-testimonial');
-      if (!cards.length || !isMobileView) return;
-      gsap.set(cards, { opacity: 0, y: 40 });
-      gsap.to(cards, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.2,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 92%', once: true },
+      if (!cards.length) return;
+      cards.forEach(function (card) {
+        gsap.set(card, { opacity: 0, y: isMobileView ? 48 : 32 });
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+        });
       });
     });
 
