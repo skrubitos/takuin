@@ -102,10 +102,10 @@ function App() {
               <a href="kontakt.html?p=poskok" className="btn btn-primary">{t.poskok.ctaPrimary}</a>
               <a href="#pricing" className="btn btn-ghost">{t.poskok.ctaGhost}</a>
             </div>
-            <div className="home-hero-stats">
-              <div className="home-hero-stat"><div className="n">400+</div><div className="l">korisnika</div></div>
-              <div className="home-hero-stat"><div className="n">20+</div><div className="l">godina na tržištu</div></div>
-            </div>
+            <HeroStats accent="#7A1E1E" items={[
+              { value: 400, suffix: '+', label: 'korisnika', icon: 'users' },
+              { value: 20, suffix: '+', label: 'godina na tržištu', icon: 'calendar' },
+            ]} />
           </div>
           <DesktopMock/>
         </div>
