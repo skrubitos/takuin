@@ -404,16 +404,7 @@
             onEnterBack: () => setActive(i),
           })
         );
-        const last = stepsRef.current.filter(Boolean).slice(-1)[0];
-        const pin = last ? ScrollTrigger.create({
-          trigger: stageRef.current,
-          start: 'center center',
-          endTrigger: last,
-          end: 'bottom 60%',
-          pin: true,
-          pinSpacing: false,
-        }) : null;
-        return () => { triggers.forEach(tr => tr.kill()); pin && pin.kill(); };
+        return () => { triggers.forEach(tr => tr.kill()); };
       }, [isMobile]);
 
       const steps = t.home.phoneStory.steps;

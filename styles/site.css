@@ -329,6 +329,10 @@ section {
 }
 
 .phone-story-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  align-self: start;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -398,6 +402,7 @@ section {
 
   .phone-story-stage {
     min-height: 0;
+    height: auto !important;
     position: static !important;
     transform: none !important;
   }
