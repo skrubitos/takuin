@@ -298,3 +298,10 @@ a, .link {
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-ring);
 }
+
+/* ============ MOBILE OVERFLOW FIX (≤768px) ============ */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+  }
+}

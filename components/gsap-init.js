@@ -4,6 +4,45 @@
 // ostaje s CSS fallbackom iz foundations.css.
 
 (function () {
+  function initScrollAnimations() {
+    if (!window.gsap || !window.ScrollTrigger) return;
+
+    // Fade-in up for feature columns (.tk-feat inside .tk-features-3)
+    document.querySelectorAll('.tk-features-3').forEach(function (section) {
+      var feats = section.querySelectorAll('.tk-feat');
+      if (!feats.length) return;
+      gsap.set(feats, { opacity: 0, y: 40 });
+      gsap.to(feats, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.14,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 82%',
+          once: true,
+        },
+      });
+    });
+
+    // Fade-in up for section/page headings
+    document.querySelectorAll('.tk-section-head, .section-head-lg').forEach(function (head) {
+      gsap.set(head, { opacity: 0, y: 28 });
+      gsap.to(head, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: head,
+          start: 'top 88%',
+          once: true,
+        },
+      });
+    });
+  }
+
   function init() {
     if (!window.gsap || !window.ScrollTrigger || !window.ScrollSmoother) return;
 
@@ -12,9 +51,13 @@
     const isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    if (!reducedMotion) {
+      initScrollAnimations();
+    }
+
     if (isSmallScreen || reducedMotion) {
       // Fallback: ne inicijaliziraj smoother, ostavi nativni scroll.
-      // ScrollTrigger i dalje radi za pinning sekcije (PhoneStory će se sam ugasiti na ≤960px).
+      // ScrollTrigger i dalje radi za animacije sekcija.
       return;
     }
 

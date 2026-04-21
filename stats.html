@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="hr" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAKUIN — Stats Komponenta</title>
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', system-ui, sans-serif; }
+    .tabular { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 flex items-start justify-center py-20 px-4">
+  <div id="root" class="w-full max-w-3xl"></div>
+
+  <!-- React 18 -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+
+  <!-- Babel Standalone (JSX transform) -->
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+
+  <!-- Framer Motion UMD (exposes window.FramerMotion) -->
+  <script src="https://unpkg.com/framer-motion@10.18.0/dist/framer-motion.umd.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+    const { motion, useInView } = FramerMotion;
+
+    /* ---- Count-up hook ---- */
+    function useCountUp(target, duration, active) {
+      const [count, setCount] = useState(0);
+      useEffect(() => {
+        if (!active) return;
+        let raf;
+        const startMs = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - startMs) / duration, 1);
+          // easeOutCubic
+          const eased = 1 - Math.pow(1 - t, 3);
+          setCount(Math.round(eased * target));
+          if (t < 1) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(raf);
+      }, [active]);
+      return count;
+    }
+
+    /* ---- Stat data ---- */
+    const STATS = [
+      {
+        product: 'TAKUIN POS',
+        accentHex: '#818cf8',
+        icon: (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        ),
+        value: 300,
+        suffix: '+',
+        label: 'Aktivnih korisnika',
+        desc: 'Tvrtki i obrtnika koji svakodnevno obavljaju fiskalizaciju i blagajno poslovanje putem TAKUIN POS-a.',
+        delay: 0,
+      },
+      {
+        product: 'TAKUIN POS',
+        accentHex: '#22d3ee',
+        icon: (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        ),
+        value: 12,
+        suffix: '+',
+        label: 'Godina na tržištu',
+        desc: 'Iskustva u razvoju mobilnog POS sustava za Android uređaje i Bluetooth fiskalne pisače.',
+        delay: 0.1,
+      },
+      {
+        product: 'POSKOK',
+        accentHex: '#fbbf24',
+        icon: (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        ),
+        value: 400,
+        suffix: '+',
+        label: 'Aktivnih korisnika',
+        desc: 'Ugostiteljskih objekata i maloprodajnih mjesta koja koriste POSKOK desktop blagajnu.',
+        delay: 0.2,
+      },
+      {
+        product: 'POSKOK',
+        accentHex: '#34d399',
+        icon: (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        ),
+        value: 20,
+        suffix: '+',
+        label: 'Godina na tržištu',
+        desc: 'Jedan od najdugovječnijih domaćih blagajnskih sustava — kontinuirani razvoj od 2004. do danas.',
+        delay: 0.3,
+      },
+    ];
+
+    /* ---- Single stat card ---- */
+    function StatCard({ stat }) {
+      const ref = useRef(null);
+      const isInView = useInView(ref, { once: true, margin: '0px 0px -80px 0px' });
+      const count = useCountUp(stat.value, 2500, isInView);
+      const hex = stat.accentHex;
+
+      return (
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: stat.delay, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: '0px 0px -80px 0px' }}
+          className="relative overflow-hidden rounded-2xl p-7 flex flex-col gap-5"
+          style={{
+            background: 'linear-gradient(145deg, rgba(30,41,59,0.85) 0%, rgba(15,23,42,0.92) 100%)',
+            border: '1px solid rgba(148,163,184,0.07)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            boxShadow: '0 1px 0 rgba(255,255,255,0.025) inset, 0 24px 48px -16px rgba(0,0,0,0.55)',
+          }}
+        >
+          {/* Radial glow in corner */}
+          <div
+            className="absolute -top-20 -right-20 w-56 h-56 rounded-full pointer-events-none"
+            style={{ background: `radial-gradient(circle, ${hex}22 0%, transparent 65%)` }}
+          />
+
+          {/* Product badge + icon */}
+          <div className="flex items-center justify-between relative z-10">
+            <span
+              className="text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
+              style={{
+                background: `${hex}14`,
+                color: hex,
+                border: `1px solid ${hex}28`,
+              }}
+            >
+              {stat.product}
+            </span>
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: `${hex}18`, color: hex }}
+            >
+              {stat.icon}
+            </div>
+          </div>
+
+          {/* Giant number */}
+          <div className="relative z-10">
+            <div className="flex items-baseline gap-0.5 leading-none">
+              <span
+                className="text-white tabular font-black"
+                style={{
+                  fontSize: 'clamp(64px, 10vw, 88px)',
+                  letterSpacing: '-4px',
+                  lineHeight: 1,
+                  fontWeight: 900,
+                }}
+              >
+                {count}
+              </span>
+              <span
+                className="font-black text-slate-500"
+                style={{
+                  fontSize: 'clamp(32px, 5vw, 44px)',
+                  letterSpacing: '-2px',
+                  lineHeight: 1,
+                  fontWeight: 900,
+                }}
+              >
+                {stat.suffix}
+              </span>
+            </div>
+            <div
+              className="mt-2 text-xs font-bold uppercase tracking-widest"
+              style={{ color: 'rgba(148,163,184,0.55)' }}
+            >
+              {stat.label}
+            </div>
+          </div>
+
+          {/* Description */}
+          <p
+            className="relative z-10 text-sm leading-relaxed mt-auto"
+            style={{ color: 'rgba(148,163,184,0.5)' }}
+          >
+            {stat.desc}
+          </p>
+        </motion.div>
+      );
+    }
+
+    /* ---- Section divider ---- */
+    function Divider({ label }) {
+      return (
+        <div className="flex items-center gap-3 mb-4">
+          <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, rgba(51,65,85,0.8))' }}/>
+          <span className="text-xs font-bold tracking-widest uppercase" style={{ color: 'rgba(100,116,139,0.7)' }}>
+            {label}
+          </span>
+          <div className="h-px flex-1 bg-slate-800/80"/>
+        </div>
+      );
+    }
+
+    /* ---- Root component ---- */
+    function TakuinStats() {
+      return (
+        <div className="w-full">
+
+          {/* Header */}
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true }}
+          >
+            <div
+              className="inline-flex items-center gap-2 mb-5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
+              style={{
+                border: '1px solid rgba(51,65,85,0.8)',
+                color: 'rgba(100,116,139,0.9)',
+              }}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-emerald-500"
+                style={{ boxShadow: '0 0 8px #10b981' }}
+              />
+              Provjerene brojke
+            </div>
+
+            <h2
+              className="text-white font-black text-balance mb-4"
+              style={{
+                fontSize: 'clamp(28px, 5.5vw, 52px)',
+                lineHeight: 1.05,
+                letterSpacing: '-2px',
+                fontWeight: 900,
+              }}
+            >
+              Iskustvo koje se mjeri{' '}
+              <span style={{
+                backgroundImage: 'linear-gradient(135deg, #818cf8, #22d3ee)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
+                godinama i korisnicima
+              </span>
+            </h2>
+
+            <p
+              className="mx-auto"
+              style={{ maxWidth: 480, fontSize: 16, lineHeight: 1.65, color: 'rgba(100,116,139,0.8)' }}
+            >
+              TAKUIN ekosustav — od prvog Android mobilnog POS-a do sveobuhvatnog desktop blagajnog sustava.
+            </p>
+          </motion.div>
+
+          {/* POS stats */}
+          <div className="mb-8">
+            <Divider label="TAKUIN POS" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {STATS.slice(0, 2).map((s, i) => <StatCard key={i} stat={s} />)}
+            </div>
+          </div>
+
+          {/* POSKOK stats */}
+          <div>
+            <Divider label="POSKOK" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {STATS.slice(2, 4).map((s, i) => <StatCard key={i} stat={s} />)}
+            </div>
+          </div>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<TakuinStats />);
+  </script>
+</body>
+</html>
