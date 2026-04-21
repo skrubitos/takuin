@@ -1509,6 +1509,7 @@ section {
     padding: 4px 16px;
     width: max-content;
     animation: tk-marquee 22s linear infinite;
+    will-change: transform;
   }
 
   .tk-products-marquee-track:hover {

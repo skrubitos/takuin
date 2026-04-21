@@ -7,22 +7,48 @@
   function initScrollAnimations() {
     if (!window.gsap || !window.ScrollTrigger) return;
 
-    // Fade-in up for feature columns (.tk-feat inside .tk-features-3)
+    var isMobileView = window.matchMedia('(max-width: 768px)').matches;
+
+    // Feature columns — pop-up on mobile, gentle fade on desktop
     document.querySelectorAll('.tk-features-3').forEach(function (section) {
       var feats = section.querySelectorAll('.tk-feat');
       if (!feats.length) return;
-      gsap.set(feats, { opacity: 0, y: 40 });
-      gsap.to(feats, {
+      if (isMobileView) {
+        gsap.set(feats, { opacity: 0, y: 50, scale: 0.95 });
+        gsap.to(feats, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          stagger: 0.18,
+          ease: 'back.out(1.4)',
+          scrollTrigger: { trigger: section, start: 'top 92%', once: true },
+        });
+      } else {
+        gsap.set(feats, { opacity: 0, y: 40 });
+        gsap.to(feats, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.14,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: section, start: 'top 82%', once: true },
+        });
+      }
+    });
+
+    // Testimonial cards — fade-up on mobile only
+    document.querySelectorAll('.tk-testimonials').forEach(function (section) {
+      var cards = section.querySelectorAll('.tk-testimonial');
+      if (!cards.length || !isMobileView) return;
+      gsap.set(cards, { opacity: 0, y: 40 });
+      gsap.to(cards, {
         opacity: 1,
         y: 0,
-        duration: 0.7,
-        stagger: 0.14,
+        duration: 0.6,
+        stagger: 0.2,
         ease: 'power2.out',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 82%',
-          once: true,
-        },
+        scrollTrigger: { trigger: section, start: 'top 92%', once: true },
       });
     });
 
