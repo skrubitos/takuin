@@ -106,7 +106,7 @@ function Footer() {
             <span className="caption">{t.footer.supportCol}</span>
             <a href="mailto:sanja@adrinaut.com">{t.footer.supportContact}</a>
             <a href="mailto:matija@takuin.eu">matija@takuin.eu</a>
-            <a href="#">{t.footer.supportInquiry}</a>
+            <a href="kontakt.html">{t.footer.supportInquiry}</a>
           </div>
         </div>
       </div>
