@@ -1693,6 +1693,7 @@ body:has(#smooth-wrapper) {
   .phone-story-stage .phone-screen {
     height: 410px;
   }
+}
 
 /* ================ Hero stats (pos.html, poskok.html) ================ */
 .tk-hero-stats {
@@ -1701,11 +1702,12 @@ body:has(#smooth-wrapper) {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-top: 36px;
+  max-width: 480px;
 }
 
 .tk-hero-stat {
   position: relative;
-  padding: 22px 22px 20px;
+  padding: 26px 22px 22px;
   background: var(--white);
   border-radius: 14px;
   border: 1px solid var(--border-ring);
@@ -1803,5 +1805,4 @@ body:has(#smooth-wrapper) {
   .tk-hero-stat:hover {
     transform: none;
   }
-}
 }
