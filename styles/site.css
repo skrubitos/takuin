@@ -1783,17 +1783,25 @@ body:has(#smooth-wrapper) {
 
 @media (max-width: 560px) {
   .tk-hero-stats {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
     margin-top: 24px;
   }
   .tk-hero-stat {
-    padding: 18px 18px 16px;
+    padding: 16px 14px 14px;
   }
   .tk-hero-stat-icon {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 12px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+  }
+  .tk-hero-stat-n {
+    font-size: 30px;
+    letter-spacing: -0.8px;
+  }
+  .tk-hero-stat-l {
+    margin-top: 8px;
+    font-size: 10.5px;
+    letter-spacing: 0.6px;
   }
 }
 
