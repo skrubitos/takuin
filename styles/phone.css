@@ -169,6 +169,17 @@
 .pr-line.pr-total { font-size: 14px; margin-top: 2px; }
 .pr-sep { border-top: 1px dashed rgba(0,0,0,0.15); margin: 4px 0; }
 
+.phone-live-dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 9999px;
+  background: #0A6C5F; flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(10, 108, 95, 0.5);
+  animation: phonePulse 1.6s ease-out infinite;
+}
+@keyframes phonePulse {
+  0% { box-shadow: 0 0 0 0 rgba(10, 108, 95, 0.5); }
+  70%, 100% { box-shadow: 0 0 0 6px rgba(10, 108, 95, 0); }
+}
+
 .phone-nav {
   position: absolute; bottom: 10px; left: 0; right: 0;
   display: flex; justify-content: center; gap: 6px;

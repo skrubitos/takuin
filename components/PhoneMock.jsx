@@ -8,11 +8,12 @@ function PhoneMock({ app = "pos", screen: controlled }) {
   const screen = isControlled ? controlled : internal;
 
   // Auto-advance the demo every 4s unless user interacts — disabled when controlled by parent.
+  // Auto-advance cycles only through the main flow (0..3); detail screens (4+) stay put.
   const [paused, setPaused] = React.useState(false);
   React.useEffect(() => {
     if (isControlled || paused) return;
     const id = setInterval(() => {
-      setInternal((s) => (s + 1) % 4);
+      setInternal((s) => s < 4 ? (s + 1) % 4 : s);
     }, 4200);
     return () => clearInterval(id);
   }, [paused, isControlled]);
@@ -37,10 +38,18 @@ function PhoneMock({ app = "pos", screen: controlled }) {
             </span>
           </div>
 
-          {screen === 0 && <ScreenHome onPick={() => go(1)} />}
+          {screen === 0 && <ScreenHome
+            onPick={() => go(1)}
+            onPonude={() => go(4)}
+            onPromet={() => go(5)}
+            onNadglednik={() => go(6)}
+          />}
           {screen === 1 && <ScreenCatalog onPick={(it) => { setSelItem(it); go(2); }} />}
           {screen === 2 && <ScreenReceipt item={selItem} onPay={() => go(3)} />}
           {screen === 3 && <ScreenSuccess onReset={() => go(0)} />}
+          {screen === 4 && <ScreenPonude onBack={() => go(0)} onPick={(it) => { setSelItem(it); go(2); }} />}
+          {screen === 5 && <ScreenPromet onBack={() => go(0)} />}
+          {screen === 6 && <ScreenNadglednik onBack={() => go(0)} />}
 
           <div className="phone-nav">
             {[0, 1, 2, 3].map(i => (
@@ -53,12 +62,12 @@ function PhoneMock({ app = "pos", screen: controlled }) {
   );
 }
 
-function ScreenHome({ onPick }) {
+function ScreenHome({ onPick, onPonude, onPromet, onNadglednik }) {
   const actions = [
-    { t: "Novi račun", s: "Izdajte u par klikova", color: "#242424" },
-    { t: "Ponude", s: "Pretvori u račun", color: "#1E5A8A" },
-    { t: "Promet", s: "Danas: €1,240.00", color: "#0A6C5F" },
-    { t: "Nadglednik", s: "Praćenje uživo", color: "#7A1E1E" },
+    { t: "Novi račun", s: "Izdajte u par klikova", color: "#242424", go: onPick },
+    { t: "Ponude", s: "Pretvori u račun", color: "#1E5A8A", go: onPonude },
+    { t: "Promet", s: "Danas: €1.240,00", color: "#0A6C5F", go: onPromet },
+    { t: "Nadglednik", s: "Praćenje uživo", color: "#7A1E1E", go: onNadglednik },
   ];
   return (
     <div className="phone-content">
@@ -70,7 +79,7 @@ function ScreenHome({ onPick }) {
         <div className="phone-avatar">S</div>
       </div>
 
-      <div className="phone-stat">
+      <div className="phone-stat" onClick={onPromet} style={{ cursor: onPromet ? "pointer" : "default" }}>
         <div className="phone-stat-label">Promet danas</div>
         <div className="phone-stat-val">€1.240,00</div>
         <div className="phone-stat-row">
@@ -82,7 +91,7 @@ function ScreenHome({ onPick }) {
 
       <div className="phone-actions">
         {actions.map((a, i) => (
-          <div key={i} className="phone-action" onClick={i === 0 ? onPick : undefined} style={{ cursor: i === 0 ? "pointer" : "default" }}>
+          <div key={i} className="phone-action" onClick={a.go} style={{ cursor: a.go ? "pointer" : "default" }}>
             <span className="phone-action-dot" style={{ background: a.color }}></span>
             <div>
               <div className="phone-action-t">{a.t}</div>
@@ -188,6 +197,101 @@ function ScreenSuccess({ onReset }) {
         <div className="pr-line small">ZKI: 4c6b1f22…</div>
       </div>
       <button className="phone-ghost" onClick={onReset}>Novi račun</button>
+    </div>
+  );
+}
+
+function ScreenPonude({ onBack, onPick }) {
+  const offers = [
+    { client: "Apartmani Luna", item: "Najam SUP · 3 osobe · 2h", ref: "P-0142 · 12.04.", p: 45.00 },
+    { client: "Villa Mare", item: "Ležaljka + suncobran · 3 dana", ref: "P-0141 · 14.04.", p: 36.00 },
+    { client: "Hotel Jadran", item: "Bicikli · 5 kom · dan", ref: "P-0140 · 15.04.", p: 50.00 },
+    { client: "Kamp Baška", item: "Pedalin · 2h", ref: "P-0139 · 16.04.", p: 40.00 },
+  ];
+  return (
+    <div className="phone-content">
+      <div className="phone-back" onClick={onBack} style={{ cursor: "pointer" }}>← Ponude</div>
+      <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--fg-3)' }}>
+        {offers.length} otvorenih · dodirni za pretvaranje u račun
+      </div>
+      <div className="phone-catalog">
+        {offers.map((o, i) => (
+          <div key={i} className="phone-cat-item" onClick={() => onPick({ n: o.item, c: o.client, p: o.p })}>
+            <div>
+              <div className="phone-cat-n">{o.client}</div>
+              <div className="phone-cat-c">{o.ref} · {o.item}</div>
+            </div>
+            <div className="phone-cat-p">€{o.p.toFixed(2)}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScreenPromet({ onBack }) {
+  const top = [
+    { n: "Ležaljka", q: "42×", v: 336.00 },
+    { n: "SUP daska", q: "14×", v: 210.00 },
+    { n: "Bicikl muški", q: "18×", v: 180.00 },
+    { n: "Pedalin", q: "8×", v: 160.00 },
+    { n: "Kajak single", q: "11×", v: 132.00 },
+  ];
+  return (
+    <div className="phone-content">
+      <div className="phone-back" onClick={onBack} style={{ cursor: "pointer" }}>← Promet</div>
+      <div className="phone-stat">
+        <div className="phone-stat-label">Promet danas · Baška, lokacija 1</div>
+        <div className="phone-stat-val">€1.240,00</div>
+        <div className="phone-stat-row">
+          <span style={{ color: '#7BD8A8' }}>↑ 12% vs. jučer</span>
+          <span><em style={{ background: '#0A6C5F' }}></em> 18 računa</span>
+          <span><em style={{ background: '#1E5A8A' }}></em> 4 ponude</span>
+        </div>
+      </div>
+      <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--fg-3)', marginTop: 2 }}>Najprodavanije danas</div>
+      <div className="phone-catalog">
+        {top.map((it, i) => (
+          <div key={i} className="phone-cat-item" style={{ cursor: 'default' }}>
+            <div>
+              <div className="phone-cat-n">{it.n}</div>
+              <div className="phone-cat-c">{it.q}</div>
+            </div>
+            <div className="phone-cat-p">€{it.v.toFixed(2)}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScreenNadglednik({ onBack }) {
+  const terminals = [
+    { n: "Baška · lokacija 1", c: "Sanja · 2 blagajne", live: true, v: "€1.240" },
+    { n: "Punat · pult", c: "Ivica · 1 blagajna", live: true, v: "€380" },
+    { n: "Malinska · terasa", c: "Nada · 1 blagajna", live: true, v: "€710" },
+    { n: "Baška · skladište", c: "zatvoreno 21:00", live: false, v: "—" },
+  ];
+  return (
+    <div className="phone-content">
+      <div className="phone-back" onClick={onBack} style={{ cursor: "pointer" }}>← Nadglednik</div>
+      <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--fg-3)', display: 'flex', alignItems: 'center', gap: 6 }}>
+        <span className="phone-live-dot"></span> Praćenje uživo · 4 terminala
+      </div>
+      <div className="phone-catalog">
+        {terminals.map((t, i) => (
+          <div key={i} className="phone-cat-item" style={{ cursor: 'default' }}>
+            <div>
+              <div className="phone-cat-n">{t.n}</div>
+              <div className="phone-cat-c" style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                {t.live && <span className="phone-live-dot"></span>}
+                {t.live ? "AKTIVNO" : "ZATVORENO"} · {t.c}
+              </div>
+            </div>
+            <div className="phone-cat-p" style={{ color: t.live ? 'var(--fg-1)' : 'var(--fg-3)' }}>{t.v}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
