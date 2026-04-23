@@ -1587,6 +1587,7 @@ body:has(#smooth-wrapper) {
   /* ---- Product snap carousel (replaces JS marquee) ---- */
   .tk-products-snap {
     display: flex;
+    align-items: flex-start;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -1597,7 +1598,7 @@ body:has(#smooth-wrapper) {
   }
   .tk-products-snap::-webkit-scrollbar { display: none; }
   .tk-products-snap .tk-product-card-mini {
-    flex: 0 0 82%;
+    flex: 0 0 calc(50% - 8px);
     scroll-snap-align: start;
     min-width: 0;
     width: auto;
