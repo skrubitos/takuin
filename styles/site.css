@@ -1584,26 +1584,6 @@ body:has(#smooth-wrapper) {
     flex: 1;
   }
 
-  /* ---- Product snap carousel (replaces JS marquee) ---- */
-  .tk-products-snap {
-    display: flex;
-    align-items: flex-start;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 12px;
-    padding: 4px 16px 16px;
-    scrollbar-width: none;
-    margin: 0 -16px;
-  }
-  .tk-products-snap::-webkit-scrollbar { display: none; }
-  .tk-products-snap .tk-product-card-mini {
-    flex: 0 0 calc(50% - 8px);
-    scroll-snap-align: start;
-    min-width: 0;
-    width: auto;
-  }
-
   /* ---- Phone story: mobile stepper ---- */
   .phone-story-mobile {
     display: flex;
