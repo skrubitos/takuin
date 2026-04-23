@@ -133,7 +133,7 @@ function Field({ label, req, hint, children }) {
 
 function Option({ checked, onClick, children, type = "checkbox" }) {
   return (
-    <label className={`tk-option ${checked ? 'on' : ''}`} onClick={onClick}>
+    <label className={`tk-option ${checked ? 'on' : ''}`} onClick={e => { e.preventDefault(); onClick(e); }}>
       <input type={type} checked={checked} onChange={() => {}}/>
       <span>{children}</span>
     </label>
