@@ -99,7 +99,7 @@ function Footer() {
           <div>
             <span className="caption">{t.footer.companyCol}</span>
             <a href="about.html">{t.footer.companyAbout}</a>
-            <a href="#">{t.footer.companyPrivacy}</a>
+            <a href="privacy.html">{t.footer.companyPrivacy}</a>
             <a href="https://adrinaut.com" target="_blank" rel="noopener">Adrinaut.com</a>
           </div>
           <div>

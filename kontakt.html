@@ -142,8 +142,6 @@ function Option({ checked, onClick, children, type = "checkbox" }) {
 
 const STEPS = [
   { id: 'company', label: 'Tvrtka' },
-  { id: 'fina',    label: 'Fiskalizacija' },
-  { id: 'cashier', label: 'Blagajna & cjenik' },
   { id: 'offer',   label: 'Ponuda' },
   { id: 'period',  label: 'Period rada' },
 ];
@@ -184,9 +182,7 @@ function App() {
   const [sent, setSent] = useState(false);
   const [f, setF] = useState({
     company: '', owner: '', phone: '', email: '', emailInvoice: '',
-    address: '', oib: '', pdv: '', finaConsent: false,
-    locations: '', priceListUs: false, priceList: '',
-    cashier: '',
+    address: '', oib: '', pdv: '',
     products: pre ? [pre] : [],
     period: '', extras: '', note: '',
   });
@@ -211,15 +207,6 @@ function App() {
       line('OIB', f.oib),
       line('PDV', f.pdv),
       '',
-      '— FISKALIZACIJA —',
-      line('Suglasnost FINA', f.finaConsent ? 'DA' : 'NE'),
-      line('Djelatnik', f.cashier),
-      '',
-      '— BLAGAJNA I CJENIK —',
-      line('Oznake blagajni/lokacija', f.locations),
-      line('Tko podešava cjenik', f.priceListUs ? 'Takuin' : 'Samostalno'),
-      line('Cjenik', f.priceList),
-      '',
       '— PONUDA —',
       productLabels.length ? `Proizvodi:\n- ${productLabels.join('\n- ')}` : null,
       line('Dodatno', f.extras),
@@ -243,10 +230,12 @@ function App() {
         <div className="tk-form-wrap">
           <div className="tk-form-card tk-success">
             <div className="check"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <h2 style={{ fontSize: 30, letterSpacing: -0.8, marginBottom: 12 }}>Hvala na upitu!</h2>
-            <p style={{ color: 'var(--fg-3)', fontSize: 16, maxWidth: 460, margin: '0 auto 28px' }}>
-              Vaš obrazac smo zaprimili. Javit ćemo vam se u najkraćem roku s detaljnom neobvezujućom ponudom na <strong style={{ color: 'var(--fg-1)' }}>{f.email || 'vašu e-mail adresu'}</strong>.
+            <h2 style={{ fontSize: 30, letterSpacing: -0.8, marginBottom: 12 }}>Vaš e-mail klijent otvoren!</h2>
+            <p style={{ color: 'var(--fg-3)', fontSize: 16, maxWidth: 480, margin: '0 auto 16px' }}>
+              Pripremili smo poruku u vašem e-mail klijentu — samo je pošaljite. Ako se klijent nije otvorio, pišite nam izravno:
             </p>
+            <a href="mailto:sanja@adrinaut.com" style={{ display: 'inline-block', marginBottom: 28, color: 'var(--fg-1)', fontWeight: 600, fontSize: 15 }}>sanja@adrinaut.com</a>
+            <br />
             <a href="index.html" className="btn btn-primary">Povratak na naslovnu</a>
           </div>
         </div>
@@ -281,7 +270,7 @@ function App() {
           {step === 0 && (
             <div>
               <h2>Podaci o tvrtki / obrtu</h2>
-              <div className="sec-desc">Osnovni podaci za izradu ponude i računa.</div>
+              <div className="sec-desc">Samo kontakt podaci — sve ostalo (FINA certifikat, cjenik, djelatnici) prikupljamo u sljedećem koraku nakon izrade ponude.</div>
               <div className="tk-field-row">
                 <Field label="Naziv tvrtke / obrta" req><input className="tk-input" value={f.company} onChange={e => up('company', e.target.value)}/></Field>
                 <Field label="Ime vlasnika" req><input className="tk-input" value={f.owner} onChange={e => up('owner', e.target.value)}/></Field>
@@ -290,13 +279,13 @@ function App() {
                 <Field label="Kontakt telefon" req><input className="tk-input" type="tel" value={f.phone} onChange={e => up('phone', e.target.value)}/></Field>
                 <Field label="Kontakt e-mail" req><input className="tk-input" type="email" value={f.email} onChange={e => up('email', e.target.value)}/></Field>
               </div>
-              <Field label="E-mail adresa za slanje ponude / računa" req hint="Ako se razlikuje od gornjeg kontakt e-maila — npr. knjigovođa">
+              <Field label="E-mail za slanje ponude / računa" hint="Ako se razlikuje od gornjeg e-maila — npr. e-mail knjigovođe">
                 <input className="tk-input" type="email" value={f.emailInvoice} onChange={e => up('emailInvoice', e.target.value)}/>
               </Field>
-              <Field label="Adresa tvrtke / obrta" req><input className="tk-input" value={f.address} onChange={e => up('address', e.target.value)}/></Field>
+              <Field label="Adresa tvrtke / obrta"><input className="tk-input" value={f.address} onChange={e => up('address', e.target.value)}/></Field>
               <div className="tk-field-row">
-                <Field label="OIB tvrtke / obrta" req><input className="tk-input" value={f.oib} onChange={e => up('oib', e.target.value)}/></Field>
-                <Field label="U sustavu PDV-a?" req>
+                <Field label="OIB tvrtke / obrta"><input className="tk-input" value={f.oib} onChange={e => up('oib', e.target.value)}/></Field>
+                <Field label="U sustavu PDV-a?">
                   <div className="tk-radio-group inline">
                     <Option type="radio" checked={f.pdv === 'DA'} onClick={() => up('pdv', 'DA')}>DA</Option>
                     <Option type="radio" checked={f.pdv === 'NE'} onClick={() => up('pdv', 'NE')}>NE</Option>
@@ -307,54 +296,6 @@ function App() {
           )}
 
           {step === 1 && (
-            <div>
-              <h2>FINA certifikat za fiskalizaciju</h2>
-              <div className="sec-desc">Za fiskalizaciju računa potreban je digitalni FINA certifikat (vrijedi 5 godina). Certifikat podatke šaljete odvojeno e-mailom ili SMS-om nakon zaprimanja ponude.</div>
-              <Field label="Potvrda" req hint="Dostavu FINA certifikata (autorizacijski kod, password ili datoteku s certifikatom) organiziramo nakon zaprimanja ponude — podatke ne unosite ovdje.">
-                <Option checked={f.finaConsent} onClick={() => up('finaConsent', !f.finaConsent)}>
-                  Suglasan sam s dostavom FINA certifikata e-mailom ili SMS-om u sigurnom obliku.
-                </Option>
-              </Field>
-              <Field
-                label="Djelatnik koji će izdavati račun"
-                req
-                hint="Ime, prezime i OIB djelatnika. Ako je više djelatnika, navedite ih u novi red."
-              >
-                <textarea className="tk-textarea" rows={3} value={f.cashier} onChange={e => up('cashier', e.target.value)} placeholder="Npr. Ivana Horvat, 12345678901"/>
-              </Field>
-            </div>
-          )}
-
-          {step === 2 && (
-            <div>
-              <h2>Blagajna i cjenik</h2>
-              <div className="sec-desc">Za svaku blagajnu potrebna je oznaka poslovnog prostora, redni broj blagajne i naziv/adresa lokacije koji se ispisuje na računu — prema Internom aktu o fiskalizaciji koji sastavlja knjigovođa.</div>
-              <Field
-                label="Oznake blagajni i lokacija"
-                req
-                hint="Npr. Poslovni prostor: POJ1 — Blagajna: 1 — Lokacija na računu: Plaža Mlini, Mlini bb, 20207 Dubrovnik"
-              >
-                <textarea className="tk-textarea" rows={4} value={f.locations} onChange={e => up('locations', e.target.value)}/>
-              </Field>
-              <Field label="Tko podešava cjenik?">
-                <div className="tk-radio-group inline">
-                  <Option type="radio" checked={f.priceListUs === true} onClick={() => up('priceListUs', true)}>Mi ga podešavamo u vaše ime</Option>
-                  <Option type="radio" checked={f.priceListUs === false} onClick={() => up('priceListUs', false)}>Samostalno ćemo podesiti</Option>
-                </div>
-              </Field>
-              {f.priceListUs && (
-                <Field
-                  label="Cjenik — naziv artikla, jedinica mjere i cijena"
-                  req
-                  hint="Jedan artikl po retku. Ako je cjenik duži, možete ga poslati e-mailom nakon slanja obrasca."
-                >
-                  <textarea className="tk-textarea" rows={5} value={f.priceList} onChange={e => up('priceList', e.target.value)} placeholder="Ležaljka — kom — 8,00 EUR&#10;Suncobran — kom — 5,00 EUR"/>
-                </Field>
-              )}
-            </div>
-          )}
-
-          {step === 3 && (
             <div>
               <h2>Molim neobvezujuću ponudu za</h2>
               <div className="sec-desc">Odaberite sve stavke koje vas zanimaju. Možete odabrati više.</div>
@@ -373,7 +314,7 @@ function App() {
             </div>
           )}
 
-          {step === 4 && (
+          {step === 2 && (
             <div>
               <h2>Period rada</h2>
               <div className="sec-desc">Odaberite očekivani period korištenja sustava. Plaćate mjesečno održavanje samo za mjesece u kojima radite.</div>
@@ -404,7 +345,7 @@ function App() {
         </div>
 
         <div style={{ marginTop: 24, padding: '16px 20px', background: 'var(--gray-50)', borderRadius: 12, fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--fg-3)', textAlign: 'center' }}>
-          Ili nas kontaktirajte izravno na <a href="mailto:sanja@adrinaut.com" style={{ color: 'var(--fg-1)' }}>sanja@adrinaut.com</a> · <a href="tel:+38591" style={{ color: 'var(--fg-1)' }}>+385 91 …</a>
+          Ili nas kontaktirajte izravno na <a href="mailto:sanja@adrinaut.com" style={{ color: 'var(--fg-1)' }}>sanja@adrinaut.com</a>
         </div>
       </div>
       <Footer/>
