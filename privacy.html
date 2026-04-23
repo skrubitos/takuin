@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Politika privatnosti — TAKUIN</title>
+<link rel="stylesheet" href="styles/foundations.css">
+<link rel="stylesheet" href="styles/site.css">
+<style>
+.privacy-wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+.privacy-wrap h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(28px, 4vw, 40px); letter-spacing: -1px; color: var(--fg-1); margin: 0 0 8px; }
+.privacy-wrap .updated { font-family: var(--font-body); font-size: 13px; color: var(--fg-3); margin-bottom: 48px; }
+.privacy-wrap h2 { font-family: var(--font-display); font-weight: 600; font-size: 18px; color: var(--fg-1); margin: 36px 0 10px; }
+.privacy-wrap p, .privacy-wrap li { font-family: var(--font-body); font-size: 15px; color: var(--fg-2); line-height: 1.65; margin: 0 0 12px; }
+.privacy-wrap ul { padding-left: 20px; margin: 0 0 12px; }
+.privacy-wrap a { color: var(--fg-1); }
+</style>
+</head>
+<body>
+<div id="nav-root"></div>
+<div id="root" data-screen-label="Privacy"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="components/i18n.jsx"></script>
+<script type="text/babel" src="components/Nav.jsx"></script>
+<script type="text/babel" src="components/Pieces.jsx"></script>
+<script type="text/babel">
+function App() {
+  return (
+    <div>
+      <Nav current="" />
+      <div className="privacy-wrap">
+        <h1>Politika privatnosti</h1>
+        <div className="updated">Zadnja izmjena: travanj 2026.</div>
+
+        <h2>Voditelj obrade</h2>
+        <p>
+          Adrinaut j.d.o.o., Sanja Vale Čupić<br />
+          Kontakt: <a href="mailto:sanja@adrinaut.com">sanja@adrinaut.com</a>
+        </p>
+
+        <h2>Koji podaci se prikupljaju</h2>
+        <p>Podaci se prikupljaju isključivo putem obrasca za ponudu na stranici <a href="kontakt.html">kontakt.html</a>. Možete unijeti:</p>
+        <ul>
+          <li>Naziv tvrtke / obrta i ime vlasnika</li>
+          <li>Kontakt telefon i e-mail adresu</li>
+          <li>Adresu tvrtke i OIB (neobavezno)</li>
+          <li>Podatke o željenim proizvodima i periodu rada</li>
+        </ul>
+        <p>Obrazac radi putem vaše e-mail aplikacije — podaci se šalju izravno na naš e-mail i ne pohranjuju se na našim poslužiteljima.</p>
+
+        <h2>Svrha i pravna osnova obrade</h2>
+        <p>Podaci se obrađuju isključivo radi izrade i dostave neobvezujuće ponude (čl. 6. st. 1. t. b) GDPR-a — obrada neophodna za izvršenje ugovora ili poduzimanje koraka na zahtjev ispitanika).</p>
+
+        <h2>Pohrana i rokovi čuvanja</h2>
+        <p>Podaci se čuvaju u e-mail prepisci do zaključenja poslovnog odnosa. Ne koristimo ih u marketinške svrhe niti ih proslijeđujemo trećim stranama bez vašeg pristanka.</p>
+
+        <h2>Kolačići i lokalna pohrana</h2>
+        <p>Stranica ne koristi analitičke ni marketinške kolačiće. U <code>localStorage</code> preglednika pohranjuje se isključivo odabrani jezik sučelja (<code>takuin_lang</code>) radi boljeg korisničkog iskustva.</p>
+
+        <h2>Vaša prava</h2>
+        <p>Sukladno GDPR-u imate pravo pristupa, ispravka, brisanja i prijenosa svojih podataka, kao i pravo na prigovor i ograničenje obrade. Zahtjeve upućujte na <a href="mailto:sanja@adrinaut.com">sanja@adrinaut.com</a>. Imate i pravo podnošenja prigovora Agenciji za zaštitu osobnih podataka (AZOP).</p>
+
+        <h2>Kontakt</h2>
+        <p>Za sva pitanja vezana uz privatnost: <a href="mailto:sanja@adrinaut.com">sanja@adrinaut.com</a></p>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
